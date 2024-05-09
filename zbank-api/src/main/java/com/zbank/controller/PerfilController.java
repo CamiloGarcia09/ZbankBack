@@ -24,6 +24,7 @@ public class PerfilController {
         return perfilData.findAll();
     }
 
+
     @PostMapping("/persona")
     public Perfil registrarPerfil(@RequestBody Perfil perfil){
         return perfilData.save(perfil);
