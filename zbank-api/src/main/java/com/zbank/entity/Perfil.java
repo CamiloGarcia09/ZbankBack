@@ -22,6 +22,21 @@ public class Perfil {
     @Column(name= "apellido")
     private String apellido;
 
+    @Column(name= "correo")
+    private String correo;
 
+    @Column(name= "divisa")
+    private String divisa;
 
+    @Column(name= "tipoDivisa")
+    private String tipoDivisa;
+
+    @Column(name= "numeroDocumento")
+    private long numeroDocumento;
+
+    @Column(name= "nombreUsuario")
+    private String nombreUsuario;
+
+    @Column(name= "calve")
+    private String clave;
 }

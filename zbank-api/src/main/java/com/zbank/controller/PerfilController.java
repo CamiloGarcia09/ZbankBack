@@ -25,19 +25,19 @@ public class PerfilController {
     }
 
 
-    @PostMapping("/persona")
+    @PostMapping("/persona/registrar")
     public Perfil registrarPerfil(@RequestBody Perfil perfil){
         return perfilData.save(perfil);
     }
 
-    @GetMapping("/persona")
+    @GetMapping("/persona/buscar")
     public ResponseEntity<Perfil> buscarPerfilPorId(@PathVariable Long id){
         Perfil perfil = perfilData.findById(id).
                 orElseThrow(() -> new ResourceNotFoundExeption("El perfil con ese id no existe: " + id));
         return ResponseEntity.ok(perfil);
     }
     
-    @PutMapping("/persona/{id}")
+    @PutMapping("/persona/editar/{id}")
     public ResponseEntity <Perfil> editarPerfil(@PathVariable Long id, @RequestBody Perfil perfilRequest){
         Perfil perfil = perfilData.findById(id).
                 orElseThrow(() -> new ResourceNotFoundExeption("El perfil con ese id no existe: " + id));
