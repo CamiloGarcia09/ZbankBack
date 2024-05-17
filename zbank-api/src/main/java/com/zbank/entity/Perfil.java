@@ -9,34 +9,31 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "perfiles")
+@Table(name = "Perfiles")
 public class Perfil {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name= "nombre")
+    @Column(name = "nombre")
     private String nombre;
 
-    @Column(name= "apellido")
+    @Column(name = "apellido")
     private String apellido;
 
-    @Column(name= "correo")
+    @Column(name = "correo")
     private String correo;
 
-    @Column(name= "divisa")
+    @Column(name = "divisa")
     private String divisa;
 
-    @Column(name= "tipoDivisa")
-    private String tipoDivisa;
-
-    @Column(name= "numeroDocumento")
+    @Column(name = "numeroDocumento")
     private long numeroDocumento;
 
-    @Column(name= "nombreUsuario")
+    @Column(name = "nombreUsuario")
     private String nombreUsuario;
 
-    @Column(name= "calve")
+    @Column(name = "clave")
     private String clave;
 }
