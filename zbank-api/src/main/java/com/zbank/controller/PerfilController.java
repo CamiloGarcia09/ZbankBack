@@ -1,7 +1,7 @@
 package com.zbank.controller;
 
 import com.zbank.data.PerfilData;
-import com.zbank.entity.Perfil;
+import com.zbank.entity.PerfilPrueba;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +17,12 @@ public class PerfilController {
     private PerfilData perfilData;
 
     @GetMapping("/persona")
-    public List<Perfil> listarPerfiles(){
+    public List<PerfilPrueba> listarPerfiles(){
         return perfilData.findAll();
     }
 
     @PostMapping("/persona/registrar")
-    public Perfil registrarPerfil(@RequestBody Perfil perfil){
+    public PerfilPrueba registrarPerfil(@RequestBody PerfilPrueba perfil){
         return perfilData.save(perfil);
     }
 

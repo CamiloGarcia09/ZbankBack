@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "Perfiles")
-public class Perfil {
+public class PerfilPrueba {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
