@@ -1,21 +1,25 @@
 package com.zbank.entity;
 
+import com.zbank.crosscuting.helpers.TextHelper;
+import com.zbank.crosscuting.helpers.UUIDHelper;
+
 import java.util.UUID;
 
-public class DivisaEntity {
+public final class DivisaEntity {
     private UUID id;
     private String codigoISO;
     private String nombre;
 
     public DivisaEntity() {
-        super();
+        setId(UUIDHelper.getDefault());
+        setCodigoISO(TextHelper.EMPTY);
+        setNombre(TextHelper.EMPTY);
     }
 
-    public DivisaEntity(UUID id, String codigoISO, String nombre) {
+    public DivisaEntity(final UUID id, final String codigoISO, final String nombre) {
         setId(id);
         setCodigoISO(codigoISO);
         setNombre(nombre);
-
     }
 
     public static final DivisaEntity buid(){
@@ -26,24 +30,27 @@ public class DivisaEntity {
         return id;
     }
 
-    public final void setId(final UUID id) {
-        this.id = id;
-    }
-
     public final String getCodigoISO() {
         return codigoISO;
-    }
-
-    public final void setCodigoISO(final String codigoISO) {
-        this.codigoISO = codigoISO;
     }
 
     public final String getNombre() {
         return nombre;
     }
 
-    public final void setNombre(final String nombre) {
-        this.nombre = nombre;
+    public final DivisaEntity setId(final UUID id) {
+        this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
+        return this;
+    }
+
+    public final DivisaEntity setCodigoISO(final String codigoISO) {
+        this.codigoISO = TextHelper.applyTrim(codigoISO);
+        return this;
+    }
+
+    public final DivisaEntity setNombre(final String nombre) {
+        this.nombre = TextHelper.applyTrim(nombre);
+        return this;
     }
 }
 

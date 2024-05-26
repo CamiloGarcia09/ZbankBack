@@ -1,19 +1,26 @@
 package com.zbank.entity;
 
-import org.hibernate.dialect.unique.CreateTableUniqueDelegate;
+import com.zbank.crosscuting.helpers.TextHelper;
+import com.zbank.crosscuting.helpers.UUIDHelper;
 
 import java.util.UUID;
 
-public class TipoDocumentoEntity {
+public final class TipoDocumentoEntity {
+
     private UUID id;
     private String nombre;
+    private String abreviacion;
 
     public TipoDocumentoEntity() {
-        super();
+        setId(UUIDHelper.getDefault());
+        setNombre(TextHelper.EMPTY);
+        setAbreviacion(TextHelper.EMPTY);
     }
-    public  TipoDocumentoEntity(UUID id, String nombre) {
+
+    public TipoDocumentoEntity(final UUID id, final String nombre, final String abreviacion) {
         setId(id);
         setNombre(nombre);
+        setAbreviacion(abreviacion);
     }
 
     public static final TipoDocumentoEntity build(){
@@ -24,17 +31,29 @@ public class TipoDocumentoEntity {
         return id;
     }
 
-    public final void setId(final UUID id) {
-        this.id = id;
+    public final String getAbreviacion() {
+        return abreviacion;
     }
 
     public final String getNombre() {
         return nombre;
     }
 
-    public final void setNombre(final String nombre) {
-        this.nombre = nombre;
+    public final TipoDocumentoEntity setId(final UUID id) {
+        this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
+        return this;
     }
+
+    public final TipoDocumentoEntity setNombre(final String nombre) {
+        this.nombre = TextHelper.applyTrim(nombre);
+        return this;
+    }
+
+    public final TipoDocumentoEntity setAbreviacion(final String abreviacion) {
+        this.abreviacion = TextHelper.applyTrim(abreviacion);
+        return this;
+    }
+
 }
 
 

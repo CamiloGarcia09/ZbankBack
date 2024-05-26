@@ -1,8 +1,14 @@
 package com.zbank.entity;
 
+import static com.zbank.crosscuting.helpers.TextHelper.EMPTY;
+
+import com.zbank.crosscuting.helpers.ObjectHelper;
+import com.zbank.crosscuting.helpers.TextHelper;
+import com.zbank.crosscuting.helpers.UUIDHelper;
+
 import java.util.UUID;
 
-public class PerfilEntity {
+public final class PerfilEntity {
     private UUID id;
     private String nombre;
     private String apellido;
@@ -10,73 +16,116 @@ public class PerfilEntity {
     private long numeroDocumento;
     private DivisaEntity divisa;
     private String nombreUsuario;
+    private String clave;
     private String correo;
 
     public PerfilEntity() {
-        super();
+        setId(UUIDHelper.getDefault());
+        setNombre(EMPTY);
+        setApellido(EMPTY);
+        setTipoDocumento(TipoDocumentoEntity.build());
+        setNumeroDocumento(numeroDocumento);
+        setDivisa(DivisaEntity.buid());
+        setNombreUsuario(EMPTY);
+        setClave(EMPTY);
+        setCorreo(EMPTY);
+    }
+
+    public PerfilEntity(final UUID id, final String nombre, final String apellido,
+                        final TipoDocumentoEntity tipoDocumento, final long numeroDocumento,
+                        final DivisaEntity divisa, final String nombreUsuario,
+                        final String clave, final String correo) {
+        setId(id);
+        setNombre(nombre);
+        setApellido(apellido);
+        setTipoDocumento(tipoDocumento);
+        setNumeroDocumento(numeroDocumento);
+        setDivisa(divisa);
+        setNombreUsuario(nombreUsuario);
+        setClave(clave);
+        setCorreo(correo);
     }
 
     public final UUID getId() {
         return id;
     }
 
-    public final void setId(final UUID id) {
-        this.id = id;
-    }
-
     public final String getNombre() {
         return nombre;
-    }
-
-    public final void setNombre(final String nombre) {
-        this.nombre = nombre;
     }
 
     public final String getApellido() {
         return apellido;
     }
 
-    public final void setApellido(final String apellido) {
-        this.apellido = apellido;
-    }
-
     public final TipoDocumentoEntity getTipoDocumento() {
         return tipoDocumento;
-    }
-
-    public final void setTipoDocumento(final TipoDocumentoEntity tipoDocumento) {
-        this.tipoDocumento = tipoDocumento;
     }
 
     public final long getNumeroDocumento() {
         return numeroDocumento;
     }
 
-    public final void setNumeroDocumento(final long numeroDocumento) {
-        this.numeroDocumento = numeroDocumento;
-    }
-
     public final DivisaEntity getDivisa() {
         return divisa;
-    }
-
-    public final void setDivisa(final DivisaEntity divisa) {
-        this.divisa = divisa;
     }
 
     public final String getNombreUsuario() {
         return nombreUsuario;
     }
 
-    public final void setNombreUsuario(final String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public final String getClave() {
+        return clave;
     }
 
     public final String getCorreo() {
         return correo;
     }
 
-    public final void setCorreo(final String correo) {
-        this.correo = correo;
+    public final PerfilEntity setId(final UUID id) {
+        this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
+        return this;
+    }
+
+    public final PerfilEntity setNombre(final String nombre) {
+        this.nombre = TextHelper.applyTrim(nombre);
+        return this;
+    }
+
+    public final PerfilEntity setApellido(final String apellido) {
+        this.apellido =  TextHelper.applyTrim(apellido);
+        return this;
+    }
+
+    public final PerfilEntity setTipoDocumento(final TipoDocumentoEntity tipoDocumento) {
+        this.tipoDocumento = ObjectHelper.getObjectHelper().
+                getDefaultValue(tipoDocumento, new TipoDocumentoEntity());
+        return this;
+    }
+
+    public final PerfilEntity setNumeroDocumento(final long numeroDocumento) {
+        this.numeroDocumento = numeroDocumento;
+        return this;
+    }
+
+    public final PerfilEntity setDivisa(final DivisaEntity divisa) {
+        this.divisa = ObjectHelper.getObjectHelper().
+                getDefaultValue(divisa, new DivisaEntity());
+        return this;
+    }
+
+    public final PerfilEntity setNombreUsuario(final String nombreUsuario) {
+        this.nombreUsuario =  TextHelper.applyTrim(nombreUsuario);
+        return this;
+    }
+
+    public final PerfilEntity setClave(final String clave) {
+        this.clave = TextHelper.applyTrim(clave);
+        return this;
+    }
+
+    public final PerfilEntity setCorreo(final String correo) {
+        this.correo = TextHelper.applyTrim(correo);
+        return this;
     }
 }
