@@ -1,7 +1,7 @@
 package com.zbank.dto;
 
-import com.zbank.crosscuting.helpers.TextHelper;
-import com.zbank.crosscuting.helpers.UUIDHelper;
+import com.zbank.crosscutting.helpers.TextHelper;
+import com.zbank.crosscutting.helpers.UUIDHelper;
 
 import java.util.UUID;
 

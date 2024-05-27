@@ -1,10 +1,10 @@
 package com.zbank.dto;
 
-import static com.zbank.crosscuting.helpers.TextHelper.EMPTY;
+import static com.zbank.crosscutting.helpers.TextHelper.EMPTY;
 
-import com.zbank.crosscuting.helpers.ObjectHelper;
-import com.zbank.crosscuting.helpers.TextHelper;
-import com.zbank.crosscuting.helpers.UUIDHelper;
+import com.zbank.crosscutting.helpers.ObjectHelper;
+import com.zbank.crosscutting.helpers.TextHelper;
+import com.zbank.crosscutting.helpers.UUIDHelper;
 import com.zbank.entity.DivisaEntity;
 import com.zbank.entity.TipoDocumentoEntity;
 
