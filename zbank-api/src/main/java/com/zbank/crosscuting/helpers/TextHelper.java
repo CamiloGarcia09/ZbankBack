@@ -4,6 +4,7 @@ public final class TextHelper {
 //Estrategia de Singleton (Todos los metodos son esticos)
     public static final String EMPTY = "";
     public static final String UNDERLINE = "_";
+
     //Constructor privado, nadie va a poder instanciar la clase, Patron SINGLETON
     private TextHelper() {
         super();
@@ -33,6 +34,7 @@ public final class TextHelper {
     }
     //Los tres puntos significa argumentos variables
     //Siempre se manda como ultimo parametro del metodo
+
     public static final String concatenate(final String ... strigns){
         final var sb = new StringBuilder(EMPTY);
         // var significa inferencia de tipos, apunta a la programacion funcional

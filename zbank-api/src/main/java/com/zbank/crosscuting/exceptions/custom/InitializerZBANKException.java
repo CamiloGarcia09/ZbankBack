@@ -11,6 +11,10 @@ public final class InitializerZBANKException extends ZBANKException {
         super(mensajeUsuario, Lugar.INITIALIZER);
     }
 
+    public InitializerZBANKException(final String mensajeTecnico, final String mensajeUsuario) {
+        super(mensajeTecnico, mensajeUsuario, Lugar.INITIALIZER);
+    }
+
     public InitializerZBANKException(final String mensajeTecnico, final String mensajeUsuario, final Throwable excepcionRaiz) {
         super(mensajeTecnico, mensajeUsuario, Lugar.INITIALIZER, excepcionRaiz);
     }

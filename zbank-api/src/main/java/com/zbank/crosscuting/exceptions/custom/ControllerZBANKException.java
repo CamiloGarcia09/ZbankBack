@@ -10,6 +10,9 @@ public final class ControllerZBANKException extends ZBANKException {
     public ControllerZBANKException(final String mensajeUsuario) {
         super(mensajeUsuario, Lugar.CONTROLLER);
     }
+    public ControllerZBANKException(final String mensajeTecnico, final String mensajeUsuario) {
+        super(mensajeTecnico, mensajeUsuario, Lugar.CONTROLLER);
+    }
 
     public ControllerZBANKException(final String mensajeTecnico, final String mensajeUsuario, final Throwable excepcionRaiz) {
         super(mensajeTecnico, mensajeUsuario, Lugar.CONTROLLER, excepcionRaiz);

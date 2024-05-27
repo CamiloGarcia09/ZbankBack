@@ -11,6 +11,9 @@ public final class EntityZBANKException extends ZBANKException {
         super(mensajeUsuario, Lugar.ENTITY);
     }
 
+    public EntityZBANKException(final String mensajeTecnico, final String mensajeUsuario) {
+        super(mensajeTecnico, mensajeUsuario, Lugar.ENTITY);
+    }
     public EntityZBANKException(final String mensajeTecnico, final String mensajeUsuario, final Throwable excepcionRaiz) {
             super(mensajeTecnico, mensajeUsuario, Lugar.ENTITY, excepcionRaiz);
     }
