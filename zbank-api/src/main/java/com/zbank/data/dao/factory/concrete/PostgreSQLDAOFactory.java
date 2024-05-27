@@ -13,7 +13,7 @@ import com.zbank.data.dao.factory.DAOFactory;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class PostgreSQLDAOFactory extends SqlConnection implements DAOFactory {
+public final class PostgreSQLDAOFactory extends SqlConnection implements DAOFactory {
 
     public PostgreSQLDAOFactory() {
         super();
@@ -21,7 +21,7 @@ public class PostgreSQLDAOFactory extends SqlConnection implements DAOFactory {
     }
 
     private void abrirConexion() {
-        final String connectionUrl = "";
+        final String connectionUrl = "";  //URL de la base de datos, usuario y contraseña para acceder a ella
         try {
             setConexion(DriverManager.getConnection(connectionUrl));
         } catch (final ZBANKException excepcion) {
