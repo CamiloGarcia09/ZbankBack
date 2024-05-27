@@ -22,7 +22,7 @@ public final class DivisaDTO {
         setNombre(nombre);
     }
 
-    public static final DivisaDTO buid(){
+    public static final DivisaDTO build(){
         return new DivisaDTO();
     }
 

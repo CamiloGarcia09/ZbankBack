@@ -22,7 +22,7 @@ public final class DivisaEntity {
         setNombre(nombre);
     }
 
-    public static final DivisaEntity buid(){
+    public static final DivisaEntity build(){
         return new DivisaEntity();
     }
 

@@ -25,7 +25,7 @@ public final class PerfilEntity {
         setApellido(EMPTY);
         setTipoDocumento(TipoDocumentoEntity.build());
         setNumeroDocumento(numeroDocumento);
-        setDivisa(DivisaEntity.buid());
+        setDivisa(DivisaEntity.build());
         setNombreUsuario(EMPTY);
         setClave(EMPTY);
         setCorreo(EMPTY);
@@ -44,6 +44,10 @@ public final class PerfilEntity {
         setNombreUsuario(nombreUsuario);
         setClave(clave);
         setCorreo(correo);
+    }
+
+    public static PerfilEntity build(){
+        return new PerfilEntity();
     }
 
     public final UUID getId() {

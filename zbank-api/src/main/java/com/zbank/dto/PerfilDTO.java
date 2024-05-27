@@ -27,7 +27,7 @@ public final class PerfilDTO {
         setApellido(EMPTY);
         setTipoDocumento(TipoDocumentoEntity.build());
         setNumeroDocumento(numeroDocumento);
-        setDivisa(DivisaEntity.buid());
+        setDivisa(DivisaEntity.build());
         setNombreUsuario(EMPTY);
         setClave(EMPTY);
         setCorreo(EMPTY);
@@ -46,6 +46,10 @@ public final class PerfilDTO {
         setNombreUsuario(nombreUsuario);
         setClave(clave);
         setCorreo(correo);
+    }
+
+    public static final PerfilDTO build(){
+        return new PerfilDTO();
     }
 
     public final UUID getId() {
