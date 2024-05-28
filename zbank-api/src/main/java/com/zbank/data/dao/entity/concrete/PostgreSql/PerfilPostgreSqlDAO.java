@@ -57,15 +57,10 @@ public final class PerfilPostgreSqlDAO extends SqlConnection implements PerfilDA
     }
 
     @Override
-    public void eliminar(PerfilEntity data) {
-
-    }
-
-    @Override
     public List<PerfilEntity> consultar(final PerfilEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder();
         sentenciaSql.append("SELECT p.id, p.nombre as nombre, p.apellido as apellido," +
-                "t.abreviacion as tipoDoumento, p.numeroDocumento as numeroDocumento, d.codigoISO as divisa, " +
+                "t.id as idTipoDocumento, t.abreviacion as tipoDoumento, p.numeroDocumento as numeroDocumento, d.id as idDivisa, d.codigoISO as divisa, " +
                 "p.nombreUsuario as nombreUsuario, p.clave as contraseña, p.correo as correoElectronico");
 
         sentenciaSql.append("FROM Perfil p");
@@ -167,6 +162,11 @@ public final class PerfilPostgreSqlDAO extends SqlConnection implements PerfilDA
 
     @Override
     public void modificar(PerfilEntity data) {
+
+    }
+
+    @Override
+    public void eliminar(PerfilEntity data) {
 
     }
 }
