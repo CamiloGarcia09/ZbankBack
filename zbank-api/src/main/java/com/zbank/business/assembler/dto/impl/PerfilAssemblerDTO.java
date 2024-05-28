@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class PerfilAssemblerDTO implements AssemblerDTO<PerfilDomain, PerfilDTO> {
+
     private static final AssemblerDTO<TipoDocumentoDomain, TipoDocumentoDTO> tipoDocumentoAssembler= TipoDocumentoAssemblerDTO.getInstance();
     private static final AssemblerDTO<DivisaDomain, DivisaDTO> divisaAssembler = DivisaAssemblerDTO.getInstance();
     private static final AssemblerDTO<PerfilDomain, PerfilDTO> instance = new PerfilAssemblerDTO();
@@ -25,17 +26,17 @@ public final class PerfilAssemblerDTO implements AssemblerDTO<PerfilDomain, Perf
     }
 
     @Override
-    public PerfilDomain toDomain(final PerfilDTO data) {
+    public final PerfilDomain toDomain(final PerfilDTO data) {
         var perfilDtoTmp= getObjectHelper().getDefaultValue(data,PerfilDTO.build());
         var divisaDomain=divisaAssembler.toDomain(perfilDtoTmp.getDivisa());
         var tipoDocumentoDomain= tipoDocumentoAssembler.toDomain(perfilDtoTmp.getTipoDocumento());
-        return PerfilDomain.build(perfilDtoTmp.getId(), perfilDtoTmp.getNombre(),perfilDtoTmp.getApellido(),tipoDocumentoDomain,
-                perfilDtoTmp.getNumeroDocumento(),divisaDomain, perfilDtoTmp.getNombreUsuario(),
-                perfilDtoTmp.getClave(),perfilDtoTmp.getCorreo());
+        return PerfilDomain.build(perfilDtoTmp.getId(), perfilDtoTmp.getNombre(), perfilDtoTmp.getApellido(), tipoDocumentoDomain,
+                perfilDtoTmp.getNumeroDocumento(), divisaDomain, perfilDtoTmp.getNombreUsuario(),
+                perfilDtoTmp.getClave(), perfilDtoTmp.getCorreo());
     }
 
     @Override
-    public PerfilDTO toDTO(final PerfilDomain domain) {
+    public final PerfilDTO toDTO(final PerfilDomain domain) {
         var perfilDomainTmp=getObjectHelper().getDefaultValue(domain,PerfilDomain.build());
         var divisaDTO= divisaAssembler.toDTO(perfilDomainTmp.getDivisa());
         var tipoDocumentoDTO=tipoDocumentoAssembler.toDTO(perfilDomainTmp.getTipoDocumento());
@@ -46,7 +47,7 @@ public final class PerfilAssemblerDTO implements AssemblerDTO<PerfilDomain, Perf
     }
 
     @Override
-    public List<PerfilDomain> toDomainCollection(final List<PerfilDTO> dtoCollection) {
+    public final List<PerfilDomain> toDomainCollection(final List<PerfilDTO> dtoCollection) {
         var dtoCollectionTmp=getObjectHelper().getDefaultValue(dtoCollection,new ArrayList<PerfilDTO>());
         var resultadosDomain=new ArrayList<PerfilDomain>();
 
@@ -58,7 +59,7 @@ public final class PerfilAssemblerDTO implements AssemblerDTO<PerfilDomain, Perf
     }
 
     @Override
-    public List<PerfilDTO> toDTOCollection(final List<PerfilDomain> domainCollection) {
+    public final List<PerfilDTO> toDTOCollection(final List<PerfilDomain> domainCollection) {
         var domainCollectionTmp=getObjectHelper().getDefaultValue(domainCollection,new ArrayList<PerfilDomain>());
         return domainCollectionTmp.stream().map(this::toDTO).toList();
     }
