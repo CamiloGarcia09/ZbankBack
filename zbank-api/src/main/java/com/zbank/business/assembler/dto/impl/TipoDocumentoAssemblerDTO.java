@@ -5,6 +5,7 @@ import com.zbank.business.domain.TipoDocumentoDomain;
 import static com.zbank.crosscutting.helpers.ObjectHelper.getObjectHelper;
 import com.zbank.dto.TipoDocumentoDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class TipoDocumentoAssemblerDTO implements AssemblerDTO<TipoDocumentoDomain, TipoDocumentoDTO> {
@@ -33,12 +34,20 @@ public final class TipoDocumentoAssemblerDTO implements AssemblerDTO<TipoDocumen
     }
 
     @Override
-    public final List<TipoDocumentoDTO> toDTOCollection(final List<TipoDocumentoDomain> domainCollection) {
-        return List.of();
+    public final List<TipoDocumentoDomain> toDomainCollection(final List<TipoDocumentoDTO> dtoCollection) {
+        var dtoCollectionTmp=getObjectHelper().getDefaultValue(dtoCollection,new ArrayList<TipoDocumentoDTO>());
+        var resultadosDomain=new ArrayList<TipoDocumentoDomain>();
+
+        for (TipoDocumentoDTO tipoDocumentoDTO:dtoCollectionTmp){
+            var tipoDocumentoDomainTmp= toDomain(tipoDocumentoDTO);
+            resultadosDomain.add(tipoDocumentoDomainTmp);
+        }
+        return resultadosDomain;
     }
 
     @Override
-    public final List<TipoDocumentoDomain> toDomainCollection(final List<TipoDocumentoDTO> entityCollection) {
-        return List.of();
+    public final List<TipoDocumentoDTO> toDTOCollection(final List<TipoDocumentoDomain> domainCollection) {
+        var domainCollectionTmp=getObjectHelper().getDefaultValue(domainCollection,new ArrayList<TipoDocumentoDomain>());
+        return domainCollectionTmp.stream().map(this::toDTO).toList();
     }
 }

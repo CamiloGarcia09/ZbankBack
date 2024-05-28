@@ -6,6 +6,7 @@ import com.zbank.business.domain.DivisaDomain;
 import static com.zbank.crosscutting.helpers.ObjectHelper.getObjectHelper;
 import com.zbank.dto.DivisaDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class DivisaAssemblerDTO  implements AssemblerDTO<DivisaDomain, DivisaDTO> {
@@ -34,12 +35,20 @@ public final class DivisaAssemblerDTO  implements AssemblerDTO<DivisaDomain, Div
     }
 
     @Override
-    public final List<DivisaDTO> toDTOCollection(final List<DivisaDomain> domainCollection) {
-        return List.of();
+    public final List<DivisaDomain> toDomainCollection(final List<DivisaDTO> dtoCollection) {
+        var dtoCollectionTmp=getObjectHelper().getDefaultValue(dtoCollection,new ArrayList<DivisaDTO>());
+        var resultadosDomain=new ArrayList<DivisaDomain>();
+
+        for (DivisaDTO divisaDTO:dtoCollectionTmp){
+            var DivisaDomainTmp= toDomain(divisaDTO);
+            resultadosDomain.add(DivisaDomainTmp);
+        }
+        return resultadosDomain;
     }
 
     @Override
-    public final List<DivisaDomain> toDomainCollection(final List<DivisaDTO> entityCollection) {
-        return List.of();
+    public final List<DivisaDTO> toDTOCollection(final List<DivisaDomain> domainCollection) {
+        var domainCollectionTmp=getObjectHelper().getDefaultValue(domainCollection,new ArrayList<DivisaDomain>());
+        return domainCollectionTmp.stream().map(this::toDTO).toList();
     }
 }
