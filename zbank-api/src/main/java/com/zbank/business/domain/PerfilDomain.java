@@ -9,7 +9,7 @@ import java.util.UUID;
 public final class PerfilDomain {
     private UUID id;
     private String nombre;
-    private String apellidos;
+    private String apellido;
     private TipoDocumentoDomain tipoDocumento;
     private long numeroDocumento;
     private DivisaDomain divisa;
@@ -18,10 +18,10 @@ public final class PerfilDomain {
     private String correo;
 
 
-    public PerfilDomain(final UUID id,final String nombre, String apellidos,final TipoDocumentoDomain tipoDocumento,final int numeroDocumento,
+    public PerfilDomain(final UUID id,final String nombre, String apellido,final TipoDocumentoDomain tipoDocumento,final long numeroDocumento,
                         final DivisaDomain divisa,final String nombreUsuario,final String clave, final String correo) {
         setNombre(nombre);
-        setApellidos(apellidos);
+        setApellido(apellido);
         setTipoDocumento(tipoDocumento);
         setNumeroDocumento(numeroDocumento);
         setDivisa(divisa);
@@ -31,9 +31,9 @@ public final class PerfilDomain {
 
     }
 
-    public static final PerfilDomain build(final UUID id,final String nombre, String apellidos,final TipoDocumentoDomain tipoDocumento,final int numeroDocumento,
+    public static final PerfilDomain build(final UUID id,final String nombre, String apellido,final TipoDocumentoDomain tipoDocumento,final long numeroDocumento,
                                            final DivisaDomain divisa,final String nombreUsuario,final String clave, final String correo) {
-        return new PerfilDomain(id, nombre, apellidos, tipoDocumento,numeroDocumento,divisa,nombreUsuario,clave,correo);
+        return new PerfilDomain(id, nombre, apellido, tipoDocumento,numeroDocumento,divisa,nombreUsuario,clave,correo);
     }
     public static final PerfilDomain build(final UUID id) {
         return new PerfilDomain(id, TextHelper.EMPTY,TextHelper.EMPTY, TipoDocumentoDomain.build(),0, DivisaDomain.build(),
@@ -53,12 +53,12 @@ public final class PerfilDomain {
         this.nombre = TextHelper.applyTrim(nombre);
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public String getApellido() {
+        return apellido;
     }
 
-    public void setApellidos(final String apellidos) {
-        this.apellidos = TextHelper.applyTrim(apellidos);
+    public void setApellido(final String apellido) {
+        this.apellido = TextHelper.applyTrim(apellido);
     }
 
     public TipoDocumentoDomain getTipoDocumento() {
