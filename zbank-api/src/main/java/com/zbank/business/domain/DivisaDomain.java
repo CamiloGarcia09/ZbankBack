@@ -6,6 +6,7 @@ import com.zbank.crosscutting.helpers.UUIDHelper;
 import java.util.UUID;
 
 public final class DivisaDomain {
+
     private UUID id;
     private String codigoISO;
     private String nombre;
@@ -32,25 +33,23 @@ public final class DivisaDomain {
         return id;
     }
 
-    public void setId(final UUID id) {
-        this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
-    }
-
     public String getCodigoISO() {
         return codigoISO;
-    }
-
-    public void setCodigoISO(final String codigoISO) {
-        this.codigoISO = TextHelper.applyTrim(codigoISO);
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(final String nombre) {
-        this.nombre = TextHelper.applyTrim(nombre);
+    private void setId(final UUID id) {
+        this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
     }
 
+    private void setCodigoISO(final String codigoISO) {
+        this.codigoISO = TextHelper.applyTrim(codigoISO);
+    }
 
+    private void setNombre(final String nombre) {
+        this.nombre = TextHelper.applyTrim(nombre);
+    }
 }
