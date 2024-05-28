@@ -14,9 +14,9 @@ public final class PerfilDTO {
     private UUID id;
     private String nombre;
     private String apellido;
-    private TipoDocumentoEntity tipoDocumento;
+    private TipoDocumentoDTO tipoDocumento;
     private long numeroDocumento;
-    private DivisaEntity divisa;
+    private DivisaDTO divisa;
     private String nombreUsuario;
     private String clave;
     private String correo;
@@ -25,17 +25,17 @@ public final class PerfilDTO {
         setId(UUIDHelper.getDefault());
         setNombre(EMPTY);
         setApellido(EMPTY);
-        setTipoDocumento(TipoDocumentoEntity.build());
+        setTipoDocumento(TipoDocumentoDTO.build());
         setNumeroDocumento(numeroDocumento);
-        setDivisa(DivisaEntity.build());
+        setDivisa(DivisaDTO.build());
         setNombreUsuario(EMPTY);
         setClave(EMPTY);
         setCorreo(EMPTY);
     }
 
     public PerfilDTO(final UUID id, final String nombre, final String apellido,
-                     final TipoDocumentoEntity tipoDocumento, final long numeroDocumento,
-                     final DivisaEntity divisa, final String nombreUsuario,
+                     final TipoDocumentoDTO tipoDocumento, final long numeroDocumento,
+                     final DivisaDTO divisa, final String nombreUsuario,
                      final String clave, final String correo) {
         setId(id);
         setNombre(nombre);
@@ -64,7 +64,7 @@ public final class PerfilDTO {
         return apellido;
     }
 
-    public final TipoDocumentoEntity getTipoDocumento() {
+    public final TipoDocumentoDTO getTipoDocumento() {
         return tipoDocumento;
     }
 
@@ -72,7 +72,7 @@ public final class PerfilDTO {
         return numeroDocumento;
     }
 
-    public final DivisaEntity getDivisa() {
+    public final DivisaDTO getDivisa() {
         return divisa;
     }
 
@@ -103,9 +103,9 @@ public final class PerfilDTO {
         return this;
     }
 
-    public final PerfilDTO setTipoDocumento(final TipoDocumentoEntity tipoDocumento) {
+    public final PerfilDTO setTipoDocumento(final TipoDocumentoDTO tipoDocumento) {
         this.tipoDocumento = ObjectHelper.getObjectHelper().
-                getDefaultValue(tipoDocumento, new TipoDocumentoEntity());
+                getDefaultValue(tipoDocumento, new TipoDocumentoDTO());
         return this;
     }
 
@@ -114,9 +114,9 @@ public final class PerfilDTO {
         return this;
     }
 
-    public final PerfilDTO setDivisa(final DivisaEntity divisa) {
+    public final PerfilDTO setDivisa(final DivisaDTO divisa) {
         this.divisa = ObjectHelper.getObjectHelper().
-                getDefaultValue(divisa, new DivisaEntity());
+                getDefaultValue(divisa, new DivisaDTO());
         return this;
     }
 
