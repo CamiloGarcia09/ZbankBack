@@ -1,4 +1,5 @@
 package com.zbank.business.usecase;
 
-public interface UseCaseWithOutReturn {
+public interface UseCaseWithOutReturn<T>{
+    void execute(T data);
 }
