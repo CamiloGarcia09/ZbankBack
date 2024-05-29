@@ -14,7 +14,7 @@ public final class ConsultarPerfilesFacade implements FacadeWithReturn<PerfilDTO
 
     private DAOFactory daoFactory;
 
-    private ConsultarPerfilesFacade(){
+    public ConsultarPerfilesFacade(){
         daoFactory = DAOFactory.getFactory();
     }
 
