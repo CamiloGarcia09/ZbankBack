@@ -28,7 +28,7 @@ public final class PerfilPostgreSqlDAO extends SqlConnection implements PerfilDA
     public final void crear(PerfilEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder ();
 
-        sentenciaSql.append("INSERT INTO Perfil (id, nombre, apellido, tipoDocumento, numeroDocumento, divisa, nombreUsuario, clave, correo)");
+        sentenciaSql.append("INSERT INTO Perfil (id, nombre, apellido, numeroDocumento, nombreUsuario, clave, correo, divisa, tipoDocumento)");
         sentenciaSql.append("SELECT ?,?,?,?,?,?,?,?,?");
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())){
@@ -36,12 +36,12 @@ public final class PerfilPostgreSqlDAO extends SqlConnection implements PerfilDA
             sentenciaSqlPreparada.setObject(1, data.getId());
             sentenciaSqlPreparada.setString(2, data.getNombre());
             sentenciaSqlPreparada.setString(3, data.getApellido());
-            sentenciaSqlPreparada.setObject(4, data.getTipoDocumento().getId());
-            sentenciaSqlPreparada.setLong(5, data.getNumeroDocumento());
-            sentenciaSqlPreparada.setObject(6, data.getDivisa().getId());
-            sentenciaSqlPreparada.setString(7, data.getNombreUsuario());
-            sentenciaSqlPreparada.setString(8, data.getClave());
-            sentenciaSqlPreparada.setString(9, data.getCorreo());
+            sentenciaSqlPreparada.setLong(4, data.getNumeroDocumento());
+            sentenciaSqlPreparada.setString(5, data.getNombreUsuario());
+            sentenciaSqlPreparada.setString(6, data.getClave());
+            sentenciaSqlPreparada.setString(7, data.getCorreo());
+            sentenciaSqlPreparada.setObject(8, data.getDivisa().getId());
+            sentenciaSqlPreparada.setObject(9, data.getTipoDocumento().getId());
 
             sentenciaSqlPreparada.executeUpdate();
 
@@ -60,13 +60,14 @@ public final class PerfilPostgreSqlDAO extends SqlConnection implements PerfilDA
     public List<PerfilEntity> consultar(final PerfilEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder();
         sentenciaSql.append("SELECT p.id, p.nombre as nombre, p.apellido as apellido," +
-                "t.id as idTipoDocumento, t.abreviacion as tipoDoumento, p.numeroDocumento as numeroDocumento, d.id as idDivisa, d.codigoISO as divisa, " +
-                "p.nombreUsuario as nombreUsuario, p.clave as contraseña, p.correo as correoElectronico");
+                "t.abreviacion as tipoDocumento, p.numeroDocumento as numeroDocumento, d.codigoISO as divisa, " +
+                "p.nombreUsuario as nombreUsuario, p.clave as contraseña, p.correoElectronico as correoElectronico ");
 
-        sentenciaSql.append("FROM Perfil p");
-        sentenciaSql.append("INNER JOIN Divisa d ON p.divisa = d.id");
-        sentenciaSql.append("INNER JOIN TipoDocumento t on p.tipoDocumento = t.id");
-        sentenciaSql.append("WHERE 1=1");
+        sentenciaSql.append("FROM Perfil p ");
+        sentenciaSql.append("INNER JOIN Divisa d ON p.divisa = d.id ");
+        sentenciaSql.append("INNER JOIN TipoDocumento t on p.tipoDocumento = t.id ");
+        sentenciaSql.append("WHERE 1=1 ");
+
 
         final List<Object> parametros = new ArrayList<>();
 
@@ -80,7 +81,7 @@ public final class PerfilPostgreSqlDAO extends SqlConnection implements PerfilDA
         }
         if (!TextHelper.isNullOrEmpty(data.getApellido())) {
             sentenciaSql.append(" AND p.apellido = ?");
-            parametros.add(data.getNombre());
+            parametros.add(data.getApellido());
         }
         if (!ObjectHelper.getObjectHelper().isNull(data.getTipoDocumento()) &&
                 !ObjectHelper.getObjectHelper().isNull(data.getTipoDocumento().getId()) &&
@@ -88,8 +89,10 @@ public final class PerfilPostgreSqlDAO extends SqlConnection implements PerfilDA
             sentenciaSql.append(" AND p.tipoDocumento = ?");
             parametros.add(data.getTipoDocumento().getId());
         }
-        sentenciaSql.append(" AND p.numeroDocumento = ?");
-        parametros.add(data.getNumeroDocumento());
+        if (data.getNumeroDocumento() != 0) {
+            sentenciaSql.append(" AND p.numeroDocumento = ?");
+            parametros.add(data.getNumeroDocumento());
+        }
         if (!ObjectHelper.getObjectHelper().isNull(data.getDivisa()) &&
                 !ObjectHelper.getObjectHelper().isNull(data.getDivisa().getId()) &&
                 !data.getDivisa().getId().equals(UUIDHelper.getDefault())) {
@@ -105,7 +108,7 @@ public final class PerfilPostgreSqlDAO extends SqlConnection implements PerfilDA
             parametros.add(data.getClave());
         }
         if (!TextHelper.isNullOrEmpty(data.getCorreo())) {
-            sentenciaSql.append(" AND p.correo = ?");
+            sentenciaSql.append(" AND p.correoElectronico = ?");
             parametros.add(data.getCorreo());
         }
 
@@ -114,27 +117,26 @@ public final class PerfilPostgreSqlDAO extends SqlConnection implements PerfilDA
         final List<PerfilEntity> perfiles = new ArrayList<>();
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
-            for (int i=0; i < parametros.size(); i++){
-                sentenciaSqlPreparada.setObject(i+1, parametros.get(i));
+            for (int i = 0; i < parametros.size(); i++) {
+                sentenciaSqlPreparada.setObject(i + 1, parametros.get(i));
             }
 
             try (final ResultSet resultado = sentenciaSqlPreparada.executeQuery()) {
                 while (resultado.next()) {
-                    PerfilEntity perfil = PerfilEntity.build();
-                    perfil.setId((UUID.fromString(resultado.getString("id"))));
-                    perfil.setNombre(resultado.getString("nombre"));
-                    perfil.setApellido(resultado.getString("apellido"));
-                    perfil.setNumeroDocumento(resultado.getLong("numeroDocumento"));
-                    perfil.setNombreUsuario(resultado.getString("nombreUsuario"));
-                    perfil.setClave(resultado.getString("contraseña"));
-                    perfil.setCorreo(resultado.getString("correoElectronio"));
+                    PerfilEntity perfil = PerfilEntity.build()
+                            .setId(UUID.fromString(resultado.getString("id")))
+                            .setNombre(resultado.getString("nombre"))
+                            .setApellido(resultado.getString("apellido"))
+                            .setNumeroDocumento(resultado.getLong("numeroDocumento"))
+                            .setNombreUsuario(resultado.getString("nombreUsuario"))
+                            .setClave(resultado.getString("clave"))
+                            .setCorreo(resultado.getString("correoElectronico"));
 
+                    TipoDocumentoEntity tipoDocumento = TipoDocumentoEntity.build()
+                            .setAbreviacion(resultado.getString("tipoDocumento"));
 
-                    TipoDocumentoEntity tipoDocumento = TipoDocumentoEntity.build();
-                    tipoDocumento.setAbreviacion(resultado.getString("abreviacion"));
-
-                    DivisaEntity divisa = DivisaEntity.build();
-                    divisa.setCodigoISO(resultado.getString("codigoISO"));
+                    DivisaEntity divisa = DivisaEntity.build()
+                            .setCodigoISO(resultado.getString("divisa"));
 
                     perfil.setDivisa(divisa);
                     perfil.setTipoDocumento(tipoDocumento);
@@ -143,18 +145,17 @@ public final class PerfilPostgreSqlDAO extends SqlConnection implements PerfilDA
                 }
             }
 
-        }catch (final SQLException exception){
+        } catch (final SQLException exception) {
             var mensajeUsuario = "Se ha presentado un problema tratando de consultar el perfil. Por favor, contacte al administrador del sistema.";
             var mensajeTecnico = "Se ha presentado una SQLException tratando de realizar la consulta de los perfiles en la tabla \"Perfil\" de la base de datos PostgreSQL.";
 
             throw new DataZBANKException(mensajeUsuario, mensajeTecnico, exception);
 
-        } catch (final Exception exception){
+        } catch (final Exception exception) {
             var mensajeUsuario = "Se ha presentado un problema tratando de consultar los perfiles. Por favor, contacte al administrador del sistema.";
             var mensajeTecnico = "Se ha presentado un problema INESPERADO con una excepción de tipo Exception tratando de realizar la consulta de los perfiles en la tabla \"Perfil\" de la base de datos PostgreSQL.";
 
             throw new DataZBANKException(mensajeUsuario, mensajeTecnico, exception);
-
         }
 
         return perfiles;

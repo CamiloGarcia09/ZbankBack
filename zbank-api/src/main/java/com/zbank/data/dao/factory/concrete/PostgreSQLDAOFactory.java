@@ -8,6 +8,9 @@ import com.zbank.crosscutting.helpers.SQLHelper;
 import com.zbank.data.dao.entity.DivisaDAO;
 import com.zbank.data.dao.entity.PerfilDAO;
 import com.zbank.data.dao.entity.TipoDocumentoDAO;
+import com.zbank.data.dao.entity.concrete.PostgreSql.DivisaPostgreSqlDAO;
+import com.zbank.data.dao.entity.concrete.PostgreSql.PerfilPostgreSqlDAO;
+import com.zbank.data.dao.entity.concrete.PostgreSql.TipoDocumentoPostgreSqlDAO;
 import com.zbank.data.dao.entity.concrete.SqlConnection;
 import com.zbank.data.dao.factory.DAOFactory;
 import java.sql.DriverManager;
@@ -21,7 +24,7 @@ public final class PostgreSQLDAOFactory extends SqlConnection implements DAOFact
     }
 
     private void abrirConexion() {
-        final String connectionUrl = "";  //URL de la base de datos, usuario y contraseña para acceder a ella
+        final String connectionUrl = "jdbc:postgresql://localhost:5432/Zbanky?user=postgres&password=653200";  //URL de la base de datos, usuario y contraseña para acceder a ella
         try {
             setConexion(DriverManager.getConnection(connectionUrl));
         } catch (final ZBANKException excepcion) {
@@ -61,17 +64,17 @@ public final class PostgreSQLDAOFactory extends SqlConnection implements DAOFact
 
     @Override
     public PerfilDAO getPerfilDAO() {
-        return null;
+        return new PerfilPostgreSqlDAO(getConexion());
     }
 
     @Override
     public TipoDocumentoDAO getTipoDocumentoDAO() {
-        return null;
+        return new TipoDocumentoPostgreSqlDAO(getConexion());
     }
 
     @Override
     public DivisaDAO getDivisaDAO() {
-        return null;
+        return new DivisaPostgreSqlDAO(getConexion());
     }
 
    /* public static void main(String[] args) {

@@ -18,17 +18,15 @@ import java.util.UUID;
 
 public final class DivisaPostgreSqlDAO extends SqlConnection implements DivisaDAO {
 
+    private static final String CONSULTAR_DIVISA_SQL = "SELECT id, nombre, codigoISO FROM Divisa WHERE 1=1";
+
     public DivisaPostgreSqlDAO(final Connection conexion) {
         super(conexion);
     }
 
     @Override
     public List<DivisaEntity> consultar(final DivisaEntity data) {
-        final StringBuilder sentenciaSql = new StringBuilder();
-        sentenciaSql.append("SELECT id, nombre, codigoISO");
-        sentenciaSql.append("FROM Divisa");
-        sentenciaSql.append("WHERE 1=1");
-
+        final StringBuilder sentenciaSql = new StringBuilder(CONSULTAR_DIVISA_SQL);
         final List<Object> parametros = new ArrayList<>();
 
         if (!ObjectHelper.getObjectHelper().isNull(data.getId()) && !data.getId().equals(UUIDHelper.getDefault())) {
@@ -44,37 +42,35 @@ public final class DivisaPostgreSqlDAO extends SqlConnection implements DivisaDA
             parametros.add(data.getCodigoISO());
         }
 
-
         final List<DivisaEntity> divisas = new ArrayList<>();
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
-            for (int i=0; i < parametros.size(); i++){
-                sentenciaSqlPreparada.setObject(i+1, parametros.get(i));
+            for (int i = 0; i < parametros.size(); i++) {
+                sentenciaSqlPreparada.setObject(i + 1, parametros.get(i));
             }
 
             try (final ResultSet resultado = sentenciaSqlPreparada.executeQuery()) {
                 while (resultado.next()) {
-                    DivisaEntity divisa = DivisaEntity.build();
-                    divisa.setId((UUID.fromString(resultado.getString("id"))));
-                    divisa.setNombre(resultado.getString("nombreDivisa"));
-                    divisa.setCodigoISO(resultado.getString("codigoISO"));
+                    DivisaEntity divisa = DivisaEntity.build()
+                            .setId(UUID.fromString(resultado.getString("id")))
+                            .setNombre(resultado.getString("nombre"))
+                            .setCodigoISO(resultado.getString("codigoISO"));
 
                     divisas.add(divisa);
                 }
             }
 
-        }catch (final SQLException exception){
+        } catch (final SQLException exception) {
             var mensajeUsuario = "Se ha presentado un problema tratando de consultar las divisas. Por favor, contacte al administrador del sistema.";
             var mensajeTecnico = "Se ha presentado una SQLException tratando de realizar la consulta de las divisas en la tabla \"Divisa\" de la base de datos PostgreSQL.";
 
             throw new DataZBANKException(mensajeUsuario, mensajeTecnico, exception);
 
-        } catch (final Exception exception){
+        } catch (final Exception exception) {
             var mensajeUsuario = "Se ha presentado un problema tratando de consultar las divisas. Por favor, contacte al administrador del sistema.";
             var mensajeTecnico = "Se ha presentado un problema INESPERADO con una excepción de tipo Exception tratando de realizar la consulta de las divisas en la tabla \"Divisa\" de la base de datos PostgreSQL.";
 
             throw new DataZBANKException(mensajeUsuario, mensajeTecnico, exception);
-
         }
 
         return divisas;
