@@ -20,8 +20,8 @@ public class ConsultarPerfiles implements UseCaseWithReturn<PerfilDomain, List<P
             throw new BusinessZBANKException(mensajeTecnico,mensajeUsuario);
         }
         this.factory=factory;
-
     }
+
     @Override
     public List<PerfilDomain> execute(final PerfilDomain data) {
         var perfilEntityFilter= PerfilAssemblerEntity.getInstance().toEntity(data);

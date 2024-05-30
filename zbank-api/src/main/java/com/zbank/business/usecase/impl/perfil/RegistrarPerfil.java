@@ -13,7 +13,7 @@ import com.zbank.entity.PerfilEntity;
 
 import java.util.UUID;
 
-public final class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
+public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
 
     private DAOFactory factory;
 

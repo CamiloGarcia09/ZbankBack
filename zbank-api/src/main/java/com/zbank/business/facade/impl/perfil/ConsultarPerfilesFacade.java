@@ -30,8 +30,8 @@ public final class ConsultarPerfilesFacade implements FacadeWithReturn<PerfilDTO
             throw exception;
         } catch (final Exception exception) {
 
-            var mensajeUsuario = "Se ha presentado un problema consultar la informacion de las ciudad";
-            var mensajeTecnico = "Se ha presentado un problema INESPERADO tratando de consultar la ciudad";
+            var mensajeUsuario = "Se ha presentado un problema consultar la informacion de los perfiles";
+            var mensajeTecnico = "Se ha presentado un problema INESPERADO tratando de consultar los perfiles";
 
             throw new BusinessZBANKException(mensajeTecnico, mensajeUsuario, exception);
 

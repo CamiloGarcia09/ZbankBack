@@ -15,11 +15,6 @@ import java.util.ArrayList;
 @RequestMapping("/zbank")
 public final class PerfilController {
 
-    @GetMapping("/dummy")
-    public PerfilDTO dummy(){
-        return PerfilDTO.build();
-    }
-
     @GetMapping("/perfiles")
     public ResponseEntity<PerfilResponse> consultar(){
 
