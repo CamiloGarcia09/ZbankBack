@@ -23,7 +23,7 @@ public class ConsultarPerfiles implements UseCaseWithReturn<PerfilDomain, List<P
 
     }
     @Override
-    public List<PerfilDomain> execute(PerfilDomain data) {
+    public List<PerfilDomain> execute(final PerfilDomain data) {
         var perfilEntityFilter= PerfilAssemblerEntity.getInstance().toEntity(data);
         var resultadosEntity=factory.getPerfilDAO().consultar(perfilEntityFilter);
         return PerfilAssemblerEntity.getInstance().toDomainCollection(resultadosEntity);

@@ -13,7 +13,7 @@ public final class PerfilEntity {
     private String nombre;
     private String apellido;
     private  TipoDocumentoEntity tipoDocumento;
-    private long numeroDocumento;
+    private int numeroDocumento;
     private DivisaEntity divisa;
     private String nombreUsuario;
     private String clave;
@@ -32,7 +32,7 @@ public final class PerfilEntity {
     }
 
     public PerfilEntity(final UUID id, final String nombre, final String apellido,
-                        final TipoDocumentoEntity tipoDocumento, final long numeroDocumento,
+                        final TipoDocumentoEntity tipoDocumento, final int numeroDocumento,
                         final DivisaEntity divisa, final String nombreUsuario,
                         final String clave, final String correo) {
         setId(id);
@@ -46,7 +46,7 @@ public final class PerfilEntity {
         setCorreo(correo);
     }
 
-    public static PerfilEntity build(){
+    public static final PerfilEntity build(){
         return new PerfilEntity();
     }
 
@@ -66,7 +66,7 @@ public final class PerfilEntity {
         return tipoDocumento;
     }
 
-    public final long getNumeroDocumento() {
+    public final int getNumeroDocumento() {
         return numeroDocumento;
     }
 
@@ -107,7 +107,7 @@ public final class PerfilEntity {
         return this;
     }
 
-    public final PerfilEntity setNumeroDocumento(final long numeroDocumento) {
+    public final PerfilEntity setNumeroDocumento(final int numeroDocumento) {
         this.numeroDocumento = numeroDocumento;
         return this;
     }

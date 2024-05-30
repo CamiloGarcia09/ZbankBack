@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public final class UUIDHelper {
 
-	private static final String DEFAULT_UUID_STRING = "00000000-0000-0000-0000-000000000000";
+	public static final String DEFAULT_UUID_STRING = "00000000-0000-0000-0000-000000000000";
 
 	private UUIDHelper() {
 		super();
@@ -24,9 +24,5 @@ public final class UUIDHelper {
 
 	public static final UUID generate() {
 		return UUID.randomUUID();
-	}
-
-	public static final boolean isDefault(final UUID value) {
-		return getDefault(value, getDefault()).equals(getDefault());
 	}
 }

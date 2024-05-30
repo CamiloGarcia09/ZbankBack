@@ -27,20 +27,19 @@ public final class PostgreSQLDAOFactory extends SqlConnection implements DAOFact
         final String connectionUrl = "jdbc:postgresql://localhost:5432/Zbanky?user=postgres&password=653200";  //URL de la base de datos, usuario y contraseña para acceder a ella
         try {
             setConexion(DriverManager.getConnection(connectionUrl));
-        } catch (final ZBANKException excepcion) {
-            throw excepcion;
         } catch (final SQLException excepcion) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00002);
-            var mensajeTecnico = "Se ha presentado un problema trat  ando de obtener la conexión con la base de datos ZBANK en el servidor de bases de datos..... Por favor revise la traza de errores para identificar y solucionar el problema...";
+            var mensajeTecnico = "Se ha presentado un problema tratando de obtener la conexión con la base de datos PostgreSQL. Por favor revise la traza de errores para identificar y solucionar el problema...";
 
             throw new DataZBANKException(mensajeTecnico, mensajeUsuario, excepcion);
         } catch (final Exception excepcion) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00002);
-            var mensajeTecnico = "Se ha presentado un problema INESPERADO tratando de obtener la conexión con la base de datos ZBANK en el servidor de bases de datos..... Por favor revise la traza de errores para identificar y solucionar el problema...";
+            var mensajeTecnico = "Se ha presentado un problema INESPERADO tratando de obtener la conexión con la base de datos PostgreSQL. Por favor revise la traza de errores para identificar y solucionar el problema...";
 
             throw new DataZBANKException(mensajeTecnico, mensajeUsuario, excepcion);
         }
     }
+
 
     @Override
     public void cerrarConexion() {

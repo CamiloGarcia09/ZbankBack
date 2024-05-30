@@ -11,14 +11,14 @@ public final class TipoDocumentoDomain {
     private String nombre;
     private String abreviacion;
 
-    private TipoDocumentoDomain(final UUID id, final String nombre,final String abreviacion) {
+    private TipoDocumentoDomain(final UUID id, final String nombre, final String abreviacion) {
         setId(id);
         setNombre(nombre);
         setAbreviacion(abreviacion);
     }
 
     public static final TipoDocumentoDomain build(final UUID id,final String nombre, final String abreviacion){
-        return new TipoDocumentoDomain(id,TextHelper.EMPTY,TextHelper.EMPTY);
+        return new TipoDocumentoDomain(id, nombre, abreviacion);
     }
 
     public static final TipoDocumentoDomain build(final UUID id){

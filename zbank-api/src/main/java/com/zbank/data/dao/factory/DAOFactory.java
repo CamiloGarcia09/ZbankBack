@@ -19,6 +19,8 @@ public interface DAOFactory {
     void cancelarTransaccion();
 
     PerfilDAO getPerfilDAO();
+
     TipoDocumentoDAO getTipoDocumentoDAO();
+
     DivisaDAO getDivisaDAO();
 }

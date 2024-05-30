@@ -53,7 +53,4 @@ public final class TipoDocumentoEntity {
         this.abreviacion = TextHelper.applyTrim(abreviacion);
         return this;
     }
-
 }
-
-

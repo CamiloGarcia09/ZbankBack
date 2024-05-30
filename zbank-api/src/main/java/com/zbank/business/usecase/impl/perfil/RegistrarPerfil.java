@@ -1,5 +1,7 @@
 package com.zbank.business.usecase.impl.perfil;
 
+import com.zbank.business.assembler.entity.impl.DivisaAssemblerEntity;
+import com.zbank.business.assembler.entity.impl.TipoDocumentoAssemblerEntity;
 import com.zbank.business.domain.PerfilDomain;
 import com.zbank.business.usecase.UseCaseWithOutReturn;
 import static com.zbank.crosscutting.helpers.ObjectHelper.getObjectHelper;
@@ -12,6 +14,7 @@ import com.zbank.entity.PerfilEntity;
 import java.util.UUID;
 
 public final class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
+
     private DAOFactory factory;
 
     public RegistrarPerfil(final DAOFactory factory) {
@@ -26,12 +29,23 @@ public final class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain>
 
     @Override
     public void execute(final PerfilDomain data) {
+        var perfilEntity = PerfilEntity.build()
+                .setId(generarIdentificadorPerfil())
+                .setNombre(data.getNombre())
+                .setApellido(data.getApellido())
+                .setTipoDocumento(TipoDocumentoAssemblerEntity.getInstance().toEntity(data.getTipoDocumento()))
+                .setNumeroDocumento(data.getNumeroDocumento())
+                .setDivisa(DivisaAssemblerEntity.getInstance().toEntity(data.getDivisa()))
+                .setNombreUsuario(data.getNombreUsuario())
+                .setClave(data.getClave())
+                .setCorreo(data.getCorreo());
 
+        factory.getPerfilDAO().crear(perfilEntity);
     }
 
     private final UUID generarIdentificadorPerfil(){
-        UUID id= UUIDHelper.generate();
 
+        UUID id= UUIDHelper.generate();
         boolean existeId=true;
 
         while (existeId){

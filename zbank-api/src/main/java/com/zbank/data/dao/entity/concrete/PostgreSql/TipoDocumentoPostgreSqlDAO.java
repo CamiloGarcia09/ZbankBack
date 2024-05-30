@@ -26,6 +26,7 @@ public final class TipoDocumentoPostgreSqlDAO extends SqlConnection implements T
 
     @Override
     public List<TipoDocumentoEntity> consultar(final TipoDocumentoEntity data) {
+
         final StringBuilder sentenciaSql = new StringBuilder(CONSULTAR_TIPOS_DOCUMENTO_SQL);
         final List<Object> parametros = new ArrayList<>();
 

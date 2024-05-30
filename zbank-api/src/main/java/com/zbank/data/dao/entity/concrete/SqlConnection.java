@@ -8,6 +8,7 @@ import com.zbank.crosscutting.helpers.SQLHelper;
 import java.sql.Connection;
 
 public class SqlConnection {
+
     private Connection conexion;
 
     protected SqlConnection() {

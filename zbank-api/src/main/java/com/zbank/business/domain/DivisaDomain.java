@@ -18,7 +18,7 @@ public final class DivisaDomain {
     }
 
     public static final DivisaDomain build(final UUID id,final String codigoISO, final String nombre) {
-       return new DivisaDomain(id, codigoISO,nombre);
+       return new DivisaDomain(id, codigoISO, nombre);
     }
 
     public static final DivisaDomain build (final UUID id) {
