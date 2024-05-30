@@ -4,6 +4,8 @@ public final class TextHelper {
 //Estrategia de Singleton (Todos los metodos son esticos)
     public static final String EMPTY = "";
     public static final String UNDERLINE = "_";
+    private static final String LISTA_SOLO_LETRAS="^[A-Za-záéíóúÁÉÍÓÚ]+$";
+    private static final String LISTA_SOLO_LETRAS_DIGITOS_ESPACIOS="^[0-9A-Za-záéíóúÁÉÍÓÚ]+$";
 
     //Constructor privado, nadie va a poder instanciar la clase, Patron SINGLETON
     private TextHelper() {
@@ -53,5 +55,18 @@ public final class TextHelper {
             mensajeReemplazado = mensajeReemplazado.replace(marcador, parametros[i]);
         }
         return mensajeReemplazado;
+    }
+
+    public static boolean longitudMinimaPermitida (final String valor, final int longitud) {
+        return applyTrim(valor).length()>= longitud;
+    }
+    public static boolean longitudMaximaPermitida (final String valor, final int longitud) {
+        return applyTrim(valor).length()<= longitud;
+    }
+    public static final boolean SoloLetras(final String valor) {
+        return getDefaultValue(valor).matches(LISTA_SOLO_LETRAS);
+    }
+    public static final boolean SoloLetrasDigitosEspacios(final String valor) {
+        return getDefaultValue(valor).matches(LISTA_SOLO_LETRAS_DIGITOS_ESPACIOS);
     }
 }

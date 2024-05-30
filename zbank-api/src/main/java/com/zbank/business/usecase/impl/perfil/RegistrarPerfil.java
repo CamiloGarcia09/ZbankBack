@@ -7,6 +7,7 @@ import com.zbank.business.usecase.UseCaseWithOutReturn;
 import static com.zbank.crosscutting.helpers.ObjectHelper.getObjectHelper;
 
 import com.zbank.crosscutting.exceptions.custom.BusinessZBANKException;
+import com.zbank.crosscutting.helpers.TextHelper;
 import com.zbank.crosscutting.helpers.UUIDHelper;
 import com.zbank.data.dao.factory.DAOFactory;
 import com.zbank.entity.PerfilEntity;
@@ -29,6 +30,23 @@ public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
 
     @Override
     public void execute(final PerfilDomain data) {
+
+        if (!validarLongitudAtributo(data.getNombre(), 2, 30)) {
+            throw new IllegalArgumentException("El nombre debe tener entre 2 y 30 caracteres.");
+        }
+        if (!validarLongitudAtributo(data.getApellido(), 2, 30)) {
+            throw new IllegalArgumentException("El apellido debe tener entre 2 y 30 caracteres.");
+        }
+        if (!validarLongitudAtributo(data.getNombreUsuario(), 3, 15)) {
+            throw new IllegalArgumentException("El nombre de usuario debe tener entre 3 y 15 caracteres.");
+        }
+        if (!validarLongitudAtributo(data.getClave(), 8, 20)) {
+            throw new IllegalArgumentException("La clave debe tener entre 8 y 20 caracteres.");
+        }
+        if (!validarLongitudAtributo(data.getCorreo(), 5, 50)) {
+            throw new IllegalArgumentException("El correo debe tener entre 5 y 50 caracteres.");
+        }
+
         var perfilEntity = PerfilEntity.build()
                 .setId(generarIdentificadorPerfil())
                 .setNombre(data.getNombre())
@@ -56,6 +74,11 @@ public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
             existeId=!resultados.isEmpty();
         }
         return id;
+    }
+
+    public boolean validarLongitudAtributo(String atributo, int longitudMinima, int longitudMaxima) {
+        return TextHelper.longitudMinimaPermitida(atributo, longitudMinima) &&
+                TextHelper.longitudMaximaPermitida(atributo, longitudMaxima);
     }
 
    /* private final void validarPerfilMismoNombreUsuario{
