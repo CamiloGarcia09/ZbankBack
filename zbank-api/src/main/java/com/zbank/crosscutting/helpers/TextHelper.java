@@ -12,7 +12,7 @@ public final class TextHelper {
     private static final String LISTA_SOLO_LETRAS="^[A-Za-záéíóúÁÉÍÓÚ\\s]+$";
     private static final String LISTA_SOLO_LETRAS_DIGITOS_ESPACIOS="^[0-9A-Za-záéíóúÁÉÍÓÚ]+$";
     private static final String PATTERN_CORREO_ELECTRONICO = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
-    private static final String PATTERN_NUMERO_TELEFONO = "^[0-9]+$";
+    private static final String PATTERN_NUMEROS = "^[0-9]+$";
 
 
     //Constructor privado, nadie va a poder instanciar la clase, Patron SINGLETON
@@ -68,21 +68,27 @@ public final class TextHelper {
     public static boolean longitudMinimaPermitida (final String valor, final int longitud) {
         return applyTrim(valor).length()>= longitud;
     }
+
     public static boolean longitudMaximaPermitida (final String valor, final int longitud) {
         return applyTrim(valor).length()<= longitud;
     }
+
     public static final boolean SoloLetras(final String valor) {
         return getDefaultValue(valor).matches(LISTA_SOLO_LETRAS);
     }
+
     public static final boolean SoloLetrasDigitosEspacios(final String valor) {
         return getDefaultValue(valor).matches(LISTA_SOLO_LETRAS_DIGITOS_ESPACIOS);
     }
+
     public static final boolean contieneFormatoCorreo(final String valor) {
         return getDefaultValue(valor).matches(PATTERN_CORREO_ELECTRONICO);
     }
+
     public static final boolean contieneSoloDigitos(final String valor) {
-        return getDefaultValue(valor).matches(PATTERN_NUMERO_TELEFONO);
+        return getDefaultValue(valor).matches(PATTERN_NUMEROS);
     }
+
     public static boolean validarClave(String contraseña) {
         boolean contieneMayuscula = !contraseña.equals(contraseña.toLowerCase());
         boolean contieneMinuscula = !contraseña.equals(contraseña.toUpperCase());

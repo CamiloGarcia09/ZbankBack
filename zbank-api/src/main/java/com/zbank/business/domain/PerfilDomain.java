@@ -12,14 +12,14 @@ public final class PerfilDomain {
     private String nombre;
     private String apellido;
     private TipoDocumentoDomain tipoDocumento;
-    private int numeroDocumento;
+    private long numeroDocumento;
     private DivisaDomain divisa;
     private String nombreUsuario;
     private String clave;
     private String correo;
 
 
-    public PerfilDomain(final UUID id,final String nombre, String apellido,final TipoDocumentoDomain tipoDocumento,final int numeroDocumento,
+    public PerfilDomain(final UUID id,final String nombre, String apellido,final TipoDocumentoDomain tipoDocumento,final long numeroDocumento,
                         final DivisaDomain divisa,final String nombreUsuario,final String clave, final String correo) {
         setId(id);
         setNombre(nombre);
@@ -33,7 +33,7 @@ public final class PerfilDomain {
 
     }
 
-    public static final PerfilDomain build(final UUID id,final String nombre, String apellido,final TipoDocumentoDomain tipoDocumento,final int numeroDocumento,
+    public static final PerfilDomain build(final UUID id,final String nombre, String apellido,final TipoDocumentoDomain tipoDocumento,final long numeroDocumento,
                                            final DivisaDomain divisa,final String nombreUsuario,final String clave, final String correo) {
         return new PerfilDomain(id, nombre, apellido, tipoDocumento, numeroDocumento, divisa, nombreUsuario, clave, correo);
     }
@@ -64,7 +64,7 @@ public final class PerfilDomain {
         return tipoDocumento;
     }
 
-    public int getNumeroDocumento() {
+    public long getNumeroDocumento() {
         return numeroDocumento;
     }
 
@@ -100,7 +100,7 @@ public final class PerfilDomain {
         this.tipoDocumento =  ObjectHelper.getObjectHelper().getDefaultValue(tipoDocumento, TipoDocumentoDomain.build());
     }
 
-    private void setNumeroDocumento(int numeroDocumento) {
+    private void setNumeroDocumento(long numeroDocumento) {
         this.numeroDocumento = numeroDocumento;
     }
 

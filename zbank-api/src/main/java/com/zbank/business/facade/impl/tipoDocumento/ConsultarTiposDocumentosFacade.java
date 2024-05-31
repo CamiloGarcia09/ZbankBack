@@ -5,6 +5,8 @@ import com.zbank.business.facade.FacadeWithReturn;
 import com.zbank.business.usecase.impl.tipoDocumento.ConsultarTiposDocumentos;
 import com.zbank.crosscutting.exceptions.ZBANKException;
 import com.zbank.crosscutting.exceptions.custom.BusinessZBANKException;
+import com.zbank.crosscutting.exceptions.messageCatalog.MessageCatalogStrategy;
+import com.zbank.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
 import com.zbank.data.dao.factory.DAOFactory;
 import com.zbank.dto.TipoDocumentoDTO;
 
@@ -30,8 +32,8 @@ public final class ConsultarTiposDocumentosFacade implements FacadeWithReturn<Ti
             throw exception;
         } catch (final Exception exception) {
 
-            var mensajeUsuario = "Se ha presentado un problema consultar la informacion de los tipos de documentos";
-            var mensajeTecnico = "Se ha presentado un problema INESPERADO tratando de consultar los tiposDocumentos";
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00055);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00056);
 
             throw new BusinessZBANKException(mensajeTecnico, mensajeUsuario, exception);
 

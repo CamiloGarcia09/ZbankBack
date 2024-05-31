@@ -4,6 +4,8 @@ import com.zbank.business.assembler.entity.impl.TipoDocumentoAssemblerEntity;
 import com.zbank.business.domain.TipoDocumentoDomain;
 import com.zbank.business.usecase.UseCaseWithReturn;
 import com.zbank.crosscutting.exceptions.custom.BusinessZBANKException;
+import com.zbank.crosscutting.exceptions.messageCatalog.MessageCatalogStrategy;
+import com.zbank.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
 import com.zbank.crosscutting.helpers.ObjectHelper;
 import com.zbank.data.dao.factory.DAOFactory;
 
@@ -15,8 +17,8 @@ public class ConsultarTiposDocumentos implements UseCaseWithReturn<TipoDocumento
 
     public ConsultarTiposDocumentos(final DAOFactory factory){
         if (ObjectHelper.getObjectHelper().isNull(factory)){
-            var mensajeUsuario="Se ha presentado un porblema tratando de llevar la consulta de los tipos de documento";
-            var mensajeTecnico="El DAOFactory de consultar los tiposDocumentos llego nulo...";
+            var mensajeUsuario=MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00043);
+            var mensajeTecnico= MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00044);
             throw new BusinessZBANKException(mensajeTecnico,mensajeUsuario);
         }
         this.factory=factory;

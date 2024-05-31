@@ -4,8 +4,11 @@ import com.zbank.business.facade.FacadeWithReturn;
 import com.zbank.business.usecase.impl.divisa.ConsultarDivisas;
 import com.zbank.crosscutting.exceptions.ZBANKException;
 import com.zbank.crosscutting.exceptions.custom.BusinessZBANKException;
+import com.zbank.crosscutting.exceptions.messageCatalog.MessageCatalogStrategy;
+import com.zbank.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
 import com.zbank.data.dao.factory.DAOFactory;
 import com.zbank.dto.DivisaDTO;
+import org.springframework.context.support.MessageSourceAccessor;
 
 import java.util.List;
 
@@ -29,8 +32,8 @@ public final class ConsultarDivisasFacade implements FacadeWithReturn<DivisaDTO,
             throw exception;
         } catch (final Exception exception) {
 
-            var mensajeUsuario = "Se ha presentado un problema consultar la informacion de las divisas";
-            var mensajeTecnico = "Se ha presentado un problema INESPERADO tratando de consultar las divisas";
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00049);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00050);
 
             throw new BusinessZBANKException(mensajeTecnico, mensajeUsuario, exception);
 

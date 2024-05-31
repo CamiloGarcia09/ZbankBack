@@ -1,6 +1,8 @@
 package com.zbank.data.dao.entity.concrete.PostgreSql;
 
 import com.zbank.crosscutting.exceptions.custom.DataZBANKException;
+import com.zbank.crosscutting.exceptions.messageCatalog.MessageCatalogStrategy;
+import com.zbank.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
 import com.zbank.crosscutting.helpers.ObjectHelper;
 import com.zbank.crosscutting.helpers.TextHelper;
 import com.zbank.crosscutting.helpers.UUIDHelper;
@@ -37,7 +39,7 @@ public final class PerfilPostgreSqlDAO extends SqlConnection implements PerfilDA
             sentenciaSqlPreparada.setString(2, data.getNombre());
             sentenciaSqlPreparada.setString(3, data.getApellido());
             sentenciaSqlPreparada.setObject(4, data.getTipoDocumento().getId());
-            sentenciaSqlPreparada.setInt(5, data.getNumeroDocumento());
+            sentenciaSqlPreparada.setLong(5, data.getNumeroDocumento());
             sentenciaSqlPreparada.setObject(6, data.getDivisa().getId());
             sentenciaSqlPreparada.setString(7, data.getNombreUsuario());
             sentenciaSqlPreparada.setString(8, data.getClave());
@@ -46,12 +48,12 @@ public final class PerfilPostgreSqlDAO extends SqlConnection implements PerfilDA
             sentenciaSqlPreparada.executeUpdate();
 
         } catch (final SQLException excepcion) {
-            var mensajeUsuario = String.format("Se ha presentado un problema tratando de crear el perfil \"%s\". Por favor intente de nuevo y si el problema persiste contacte con el administrador...", data.getNombre());
-            var mensajeTecnico = String.format("Se ha presentado una excepcion de tipo SQLException tratando de realizar el insert del perfil \"%s\" en la tabla \"Perfil\" de la base de datos PostgreSQL. Para más detalles, revise de forma completa la excepción raíz presentada..", data.getNombre());
+            var mensajeUsuario =TextHelper.reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00031), data.getNombreUsuario());
+            var mensajeTecnico = TextHelper.reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00032, data.getNombre()));
             throw new DataZBANKException(mensajeTecnico, mensajeUsuario, excepcion);
         } catch (final Exception excepcion) {
-            var mensajeUsuario = String.format("Se ha presentado un problema tratando de crear el perfil \"%s\". Por favor intente de nuevo y si el problema persiste contacte con el administrador...", data.getNombre());
-            var mensajeTecnico = String.format("Se ha presentado un problema INESPERADO de tipo Exception tratando de realizar el insert del perfil \"%s\" en la tabla \"Perfil\" de la base de datos PostgreSQL. Para más detalles, revise de forma completa la excepción raíz presentada..", data.getNombre());
+            var mensajeUsuario = TextHelper.reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00033), data.getNombre());
+            var mensajeTecnico = TextHelper.reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00034), data.getNombre());
             throw new DataZBANKException(mensajeTecnico, mensajeUsuario, excepcion);
         }
     }
@@ -149,15 +151,15 @@ public final class PerfilPostgreSqlDAO extends SqlConnection implements PerfilDA
                 }
             }
         } catch (final SQLException exception) {
-            var mensajeUsuario = "Se ha presentado un problema tratando de consultar el perfil. Por favor, contacte al administrador del sistema.";
-            var mensajeTecnico = TextHelper.reemplazarParametro("Se ha presentado una SQLException tratando de realizar la consulta de los perfiles en la tabla \"Perfil\" de la base de datos PostgreSQL.","1");
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00035);
+            var mensajeTecnico = TextHelper.reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00036), data.getNombre());
 
-            throw new DataZBANKException(mensajeUsuario, mensajeTecnico, exception);
+            throw new DataZBANKException(mensajeTecnico, mensajeUsuario, exception);
         } catch (final Exception exception) {
-            var mensajeUsuario = "Se ha presentado un problema tratando de consultar los perfiles. Por favor, contacte al administrador del sistema.";
-            var mensajeTecnico = "Se ha presentado un problema INESPERADO con una excepción de tipo Exception tratando de realizar la consulta de los perfiles en la tabla \"Perfil\" de la base de datos PostgreSQL.";
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00037);
+            var mensajeTecnico = TextHelper.reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00038), data.getNombre());
 
-            throw new DataZBANKException(mensajeUsuario, mensajeTecnico, exception);
+            throw new DataZBANKException(mensajeTecnico, mensajeUsuario, exception);
         }
 
         return perfiles;

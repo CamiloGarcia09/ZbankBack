@@ -11,7 +11,7 @@ public final class PerfilDTO {
     private String nombre;
     private String apellido;
     private TipoDocumentoDTO tipoDocumento;
-    private int numeroDocumento;
+    private long numeroDocumento;
     private DivisaDTO divisa;
     private String nombreUsuario;
     private String clave;
@@ -30,7 +30,7 @@ public final class PerfilDTO {
     }
 
     public PerfilDTO(final UUID id, final String nombre, final String apellido,
-                     final TipoDocumentoDTO tipoDocumento, final int numeroDocumento,
+                     final TipoDocumentoDTO tipoDocumento, final long numeroDocumento,
                      final DivisaDTO divisa, final String nombreUsuario,
                      final String clave, final String correo) {
         setId(id);
@@ -64,7 +64,7 @@ public final class PerfilDTO {
         return tipoDocumento;
     }
 
-    public final int getNumeroDocumento() {
+    public final long getNumeroDocumento() {
         return numeroDocumento;
     }
 
@@ -105,7 +105,7 @@ public final class PerfilDTO {
         return this;
     }
 
-    public final PerfilDTO setNumeroDocumento(final int numeroDocumento) {
+    public final PerfilDTO setNumeroDocumento(final long numeroDocumento) {
         this.numeroDocumento = numeroDocumento;
         return this;
     }

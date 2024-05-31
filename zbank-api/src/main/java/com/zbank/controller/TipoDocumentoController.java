@@ -3,7 +3,10 @@ package com.zbank.controller;
 import com.zbank.business.facade.impl.tipoDocumento.ConsultarTiposDocumentosFacade;
 import com.zbank.controller.response.TipoDocumentoResponse;
 import com.zbank.crosscutting.exceptions.ZBANKException;
+import com.zbank.crosscutting.exceptions.messageCatalog.MessageCatalogStrategy;
+import com.zbank.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
 import com.zbank.dto.TipoDocumentoDTO;
+import org.apache.logging.log4j.message.Message;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +28,8 @@ public final class TipoDocumentoController {
             var facade = new ConsultarTiposDocumentosFacade();
 
             tipoDocumentoResponse.setDatos(facade.execute(tipoDocumentoDto));
-            tipoDocumentoResponse.getMensajes().add("Tipos de Documentos consultados exitosamente");
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00060);
+            tipoDocumentoResponse.getMensajes().add(mensajeUsuario);
 
         }catch(final ZBANKException excepcion) {
             httpStatusCode = HttpStatus.BAD_REQUEST;
@@ -34,7 +38,7 @@ public final class TipoDocumentoController {
         }catch(final Exception excepcion) {
             httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
-            var mensajeUsuario = "Se ha presentado un problema tratando de consultar los tipos de documentos";
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00043);
             tipoDocumentoResponse.getMensajes().add(mensajeUsuario);
 
             excepcion.printStackTrace();

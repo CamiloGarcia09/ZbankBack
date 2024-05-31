@@ -5,6 +5,8 @@ import com.zbank.crosscutting.exceptions.messageCatalog.MessageCatalog;
 import com.zbank.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
 import com.zbank.crosscutting.exceptions.messageCatalog.data.Mensaje;
 import com.zbank.crosscutting.helpers.ObjectHelper;
+import com.zbank.crosscutting.helpers.TextHelper;
+
 import java.util.HashMap;
 import java.util.Map;
 public class MessageCatalogBase implements MessageCatalog {
@@ -81,6 +83,8 @@ public class MessageCatalogBase implements MessageCatalog {
         mensajes.put(CodigoMensaje.M00023.getIdentificador(), new Mensaje(CodigoMensaje.M00023,
                 "Se ha presentado un problema INESPERADO tratando de iniciar una transacción SQL con la fuente de información deseada..."));
 
+
+
     }
 
     @Override
@@ -97,12 +101,12 @@ public class MessageCatalogBase implements MessageCatalog {
         }
         if (!codigo.isBase()) {
             var mensajeUsuario=obtenerContendidoMensaje(CodigoMensaje.M00002);
-            var mensajeTecnico=obtenerContendidoMensaje(CodigoMensaje.M00004, codigo.getIdentificador());
+            var mensajeTecnico= TextHelper.reemplazarParametro(obtenerContendidoMensaje(CodigoMensaje.M00004, codigo.getIdentificador()));
             throw new CrosscuttingZBANKException(mensajeTecnico, mensajeUsuario);
         }
         if (!mensajes.containsKey(codigo.getIdentificador())) {
             var mensajeUsuario=obtenerContendidoMensaje(CodigoMensaje.M00002);
-            var mensajeTecnico=obtenerContendidoMensaje(CodigoMensaje.M00003, codigo.getIdentificador());
+            var mensajeTecnico=TextHelper.reemplazarParametro(obtenerContendidoMensaje(CodigoMensaje.M00003, codigo.getIdentificador()));
             throw new CrosscuttingZBANKException(mensajeTecnico, mensajeUsuario);
         }
 

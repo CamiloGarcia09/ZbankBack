@@ -4,6 +4,8 @@ import com.zbank.business.assembler.entity.impl.DivisaAssemblerEntity;
 import com.zbank.business.domain.DivisaDomain;
 import com.zbank.business.usecase.UseCaseWithReturn;
 import com.zbank.crosscutting.exceptions.custom.BusinessZBANKException;
+import com.zbank.crosscutting.exceptions.messageCatalog.MessageCatalogStrategy;
+import com.zbank.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
 import com.zbank.crosscutting.helpers.ObjectHelper;
 import com.zbank.data.dao.factory.DAOFactory;
 
@@ -15,8 +17,8 @@ public class ConsultarDivisas implements UseCaseWithReturn<DivisaDomain, List<Di
 
     public ConsultarDivisas(final DAOFactory factory){
         if (ObjectHelper.getObjectHelper().isNull(factory)){
-            var mensajeUsuario="Se ha presentado un porblema tratando de llevar la consulta de las divisas";
-            var mensajeTecnico="El DAOFactory de consultar las divisas llego nulo...";
+            var mensajeUsuario=MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00047);
+            var mensajeTecnico= MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00048);
             throw new BusinessZBANKException(mensajeTecnico,mensajeUsuario);
         }
         this.factory=factory;

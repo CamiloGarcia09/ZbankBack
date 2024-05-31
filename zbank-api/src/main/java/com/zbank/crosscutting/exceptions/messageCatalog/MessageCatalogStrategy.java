@@ -4,11 +4,12 @@ import com.zbank.crosscutting.exceptions.custom.CrosscuttingZBANKException;
 import com.zbank.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
 import com.zbank.crosscutting.exceptions.messageCatalog.data.Mensaje;
 import com.zbank.crosscutting.exceptions.messageCatalog.impl.MessageCatalogBase;
+import com.zbank.crosscutting.exceptions.messageCatalog.impl.MessageCatalogExternalService;
 import com.zbank.crosscutting.helpers.ObjectHelper;
 
 public class MessageCatalogStrategy {
     private static final MessageCatalog base= new MessageCatalogBase();
-    private static final MessageCatalog externalService= new MessageCatalogBase();
+    private static final MessageCatalog externalService= new MessageCatalogExternalService();
 
     static {
         inicializar();

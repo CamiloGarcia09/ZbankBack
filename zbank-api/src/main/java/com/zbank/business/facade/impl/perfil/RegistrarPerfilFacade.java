@@ -5,6 +5,8 @@ import com.zbank.business.facade.FacadeWithOutReturn;
 import com.zbank.business.usecase.impl.perfil.RegistrarPerfil;
 import com.zbank.crosscutting.exceptions.ZBANKException;
 import com.zbank.crosscutting.exceptions.custom.BusinessZBANKException;
+import com.zbank.crosscutting.exceptions.messageCatalog.MessageCatalogStrategy;
+import com.zbank.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
 import com.zbank.data.dao.factory.DAOFactory;
 import com.zbank.dto.PerfilDTO;
 
@@ -33,8 +35,8 @@ public final class RegistrarPerfilFacade implements FacadeWithOutReturn <PerfilD
         }catch(final Exception excepcion) {
             daoFactory.cancelarTransaccion();
 
-            var mensajeUsuario=("Se ha presentado un problema tratando de registrar la información");
-            var mensajeTecnico=("Se ha presentado un problema INESPERADO tratando de registrar la información");
+            var mensajeUsuario=MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00053);
+            var mensajeTecnico= MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00054);
 
             throw new BusinessZBANKException(mensajeTecnico,mensajeUsuario,excepcion);
         } finally {

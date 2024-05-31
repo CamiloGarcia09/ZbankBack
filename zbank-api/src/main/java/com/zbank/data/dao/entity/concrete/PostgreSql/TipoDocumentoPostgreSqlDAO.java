@@ -1,12 +1,15 @@
 package com.zbank.data.dao.entity.concrete.PostgreSql;
 
 import com.zbank.crosscutting.exceptions.custom.DataZBANKException;
+import com.zbank.crosscutting.exceptions.messageCatalog.MessageCatalogStrategy;
+import com.zbank.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
 import com.zbank.crosscutting.helpers.ObjectHelper;
 import com.zbank.crosscutting.helpers.TextHelper;
 import com.zbank.crosscutting.helpers.UUIDHelper;
 import com.zbank.data.dao.entity.TipoDocumentoDAO;
 import com.zbank.data.dao.entity.concrete.SqlConnection;
 import com.zbank.entity.TipoDocumentoEntity;
+import org.springframework.context.support.MessageSourceAccessor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -62,16 +65,16 @@ public final class TipoDocumentoPostgreSqlDAO extends SqlConnection implements T
             }
 
         } catch (final SQLException exception) {
-            var mensajeUsuario = "Se ha presentado un problema tratando de consultar los tipos de documento. Por favor, contacte al administrador del sistema.";
-            var mensajeTecnico = "Se ha presentado una SQLException tratando de realizar la consulta de los tipos de documentos en la tabla \"TipoDocumento\" de la base de datos PostgreSQL.";
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00027);
+            var mensajeTecnico = TextHelper.reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00028), data.getNombre());
 
-            throw new DataZBANKException(mensajeUsuario, mensajeTecnico, exception);
+            throw new DataZBANKException(mensajeTecnico, mensajeUsuario, exception);
 
         } catch (final Exception exception) {
-            var mensajeUsuario = "Se ha presentado un problema tratando de consultar los tipos de documento. Por favor, contacte al administrador del sistema.";
-            var mensajeTecnico = "Se ha presentado un problema INESPERADO con una excepción de tipo Exception tratando de realizar la consulta de los tipos de documentos en la tabla \"TipoDocumento\" de la base de datos PostgreSQL.";
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00029);
+            var mensajeTecnico = TextHelper.reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00030), data.getNombre());
 
-            throw new DataZBANKException(mensajeUsuario, mensajeTecnico, exception);
+            throw new DataZBANKException(mensajeTecnico, mensajeUsuario, exception);
 
         }
 

@@ -3,6 +3,8 @@ package com.zbank.controller;
 import com.zbank.business.facade.impl.divisa.ConsultarDivisasFacade;
 import com.zbank.controller.response.DivisaResponse;
 import com.zbank.crosscutting.exceptions.ZBANKException;
+import com.zbank.crosscutting.exceptions.messageCatalog.MessageCatalogStrategy;
+import com.zbank.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
 import com.zbank.dto.DivisaDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,8 @@ public final class DivisaController {
             var facade = new ConsultarDivisasFacade();
 
             divisaResponse.setDatos(facade.execute(divisaDto));
-            divisaResponse.getMensajes().add("Divisas consultadas exitosamente");
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00058);
+            divisaResponse.getMensajes().add(mensajeUsuario);
 
         }catch(final ZBANKException excepcion) {
             httpStatusCode = HttpStatus.BAD_REQUEST;
@@ -34,7 +37,7 @@ public final class DivisaController {
         }catch(final Exception excepcion) {
             httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
-            var mensajeUsuario = "Se ha presentado un problema tratando de consultar las divisas";
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00049);
             divisaResponse.getMensajes().add(mensajeUsuario);
 
             excepcion.printStackTrace();

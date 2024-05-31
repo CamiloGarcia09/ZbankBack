@@ -1,6 +1,8 @@
 package com.zbank.data.dao.entity.concrete.PostgreSql;
 
 import com.zbank.crosscutting.exceptions.custom.DataZBANKException;
+import com.zbank.crosscutting.exceptions.messageCatalog.MessageCatalogStrategy;
+import com.zbank.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
 import com.zbank.crosscutting.helpers.ObjectHelper;
 import com.zbank.crosscutting.helpers.TextHelper;
 import com.zbank.crosscutting.helpers.UUIDHelper;
@@ -61,21 +63,20 @@ public final class DivisaPostgreSqlDAO extends SqlConnection implements DivisaDA
             }
 
         } catch (final SQLException exception) {
-            var mensajeUsuario = "Se ha presentado un problema tratando de consultar las divisas. Por favor, contacte al administrador del sistema.";
-            var mensajeTecnico = "Se ha presentado una SQLException tratando de realizar la consulta de las divisas en la tabla \"Divisa\" de la base de datos PostgreSQL.";
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00039);
+            var mensajeTecnico =TextHelper.reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00040, data.getNombre()));
 
-            throw new DataZBANKException(mensajeUsuario, mensajeTecnico, exception);
+            throw new DataZBANKException(mensajeTecnico, mensajeUsuario, exception);
 
         } catch (final Exception exception) {
-            var mensajeUsuario = "Se ha presentado un problema tratando de consultar las divisas. Por favor, contacte al administrador del sistema.";
-            var mensajeTecnico = "Se ha presentado un problema INESPERADO con una excepción de tipo Exception tratando de realizar la consulta de las divisas en la tabla \"Divisa\" de la base de datos PostgreSQL.";
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00041);
+            var mensajeTecnico = TextHelper.reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00042), data.getNombre());
 
-            throw new DataZBANKException(mensajeUsuario, mensajeTecnico, exception);
+            throw new DataZBANKException(mensajeTecnico, mensajeUsuario, exception);
         }
 
         return divisas;
     }
-
 
 
     @Override

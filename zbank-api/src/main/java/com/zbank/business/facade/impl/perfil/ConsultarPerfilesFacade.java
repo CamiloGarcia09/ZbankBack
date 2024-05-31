@@ -5,6 +5,8 @@ import com.zbank.business.facade.FacadeWithReturn;
 import com.zbank.business.usecase.impl.perfil.ConsultarPerfiles;
 import com.zbank.crosscutting.exceptions.ZBANKException;
 import com.zbank.crosscutting.exceptions.custom.BusinessZBANKException;
+import com.zbank.crosscutting.exceptions.messageCatalog.MessageCatalogStrategy;
+import com.zbank.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
 import com.zbank.data.dao.factory.DAOFactory;
 import com.zbank.dto.PerfilDTO;
 
@@ -30,8 +32,8 @@ public final class ConsultarPerfilesFacade implements FacadeWithReturn<PerfilDTO
             throw exception;
         } catch (final Exception exception) {
 
-            var mensajeUsuario = "Se ha presentado un problema consultar la informacion de los perfiles";
-            var mensajeTecnico = "Se ha presentado un problema INESPERADO tratando de consultar los perfiles";
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00051);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00052);
 
             throw new BusinessZBANKException(mensajeTecnico, mensajeUsuario, exception);
 
