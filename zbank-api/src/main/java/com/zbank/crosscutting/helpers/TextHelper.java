@@ -9,11 +9,11 @@ public final class TextHelper {
 //Estrategia de Singleton (Todos los metodos son esticos)
     public static final String EMPTY = "";
     public static final String UNDERLINE = "_";
-    private static final String LISTA_SOLO_LETRAS="^[A-Za-záéíóúÁÉÍÓÚ]+$";
+    private static final String LISTA_SOLO_LETRAS="^[A-Za-záéíóúÁÉÍÓÚ\\s]+$";
     private static final String LISTA_SOLO_LETRAS_DIGITOS_ESPACIOS="^[0-9A-Za-záéíóúÁÉÍÓÚ]+$";
     private static final String PATTERN_CORREO_ELECTRONICO = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
     private static final String PATTERN_NUMERO_TELEFONO = "^[0-9]+$";
-    private static final List<Character> caracteresEspeciales = Arrays.asList('!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '[', ']', '{', '}', ';', ':', ',', '.', '<', '>', '?');
+
 
     //Constructor privado, nadie va a poder instanciar la clase, Patron SINGLETON
     private TextHelper() {

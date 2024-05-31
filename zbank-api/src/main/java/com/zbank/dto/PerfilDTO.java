@@ -18,7 +18,7 @@ public final class PerfilDTO {
     private String correo;
 
     public PerfilDTO() {
-        setId(UUIDHelper.generate());
+        setId(UUIDHelper.getDefault());
         setNombre(EMPTY);
         setApellido(EMPTY);
         setTipoDocumento(TipoDocumentoDTO.build());

@@ -62,11 +62,21 @@ public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
         if (!validarLongitudAtributo(data.getApellido(), 1, 20)) {
             throw new IllegalArgumentException("El apellido debe tener entre 1 y 20 caracteres.");
         }
-        if(!TextHelper.SoloLetrasDigitosEspacios(data.getNombreUsuario())){
-            throw new IllegalArgumentException("El nombre de usuario solo puede contener letras y numeros");
+        if (!TextHelper.contieneSoloDigitos(String.valueOf(data.getNumeroDocumento()))) {
+            throw new IllegalArgumentException("El número de documento debe contener solo dígitos.");
+        }
+        if (!validarLongitudAtributo(String.valueOf(data.getNumeroDocumento()), 1, 20)) {
+            throw new IllegalArgumentException("El número de documento debe tener entre 1 y 20 caracteres.");
+        }
+        if (!TextHelper.SoloLetrasDigitosEspacios(data.getNombreUsuario())) {
+            throw new IllegalArgumentException("El nombre de usuario solo puede contener letras y números.");
         }
         if (!validarLongitudAtributo(data.getNombreUsuario(), 1, 25)) {
             throw new IllegalArgumentException("El nombre de usuario debe tener entre 1 y 25 caracteres.");
+        }
+        if (!TextHelper.validarClave(String.valueOf(data.getClave()))){
+            throw new IllegalArgumentException("La contraseña debe tener como minimo una letra mayuscula, una minuscula, " +
+                    "un numero y un caracter especial.");
         }
         if (!validarLongitudAtributo(data.getClave(), 8, 30)) {
             throw new IllegalArgumentException("La clave debe tener entre 8 y 30 caracteres.");
