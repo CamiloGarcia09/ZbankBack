@@ -9,10 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/zbank")
+@CrossOrigin(origins="http://localhost:3000")
 public final class PerfilController {
 
     @GetMapping("/perfiles")
@@ -35,7 +35,7 @@ public final class PerfilController {
 
         }catch (final Exception exception){
             httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-            var mensajeUsuario = "Se ha presntado un problema tratando de consultar los perfiles";
+            var mensajeUsuario = "Se ha presentado un problema tratando de consultar los perfiles";
             perfilResponse.getMensajes().add(mensajeUsuario);
 
             exception.printStackTrace();
@@ -61,7 +61,7 @@ public final class PerfilController {
         } catch (final Exception excepcion) {
             httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
-            var mensajeUsuario = "se ha presentado un prblema tratando de registar el nuevo Perfil";
+            var mensajeUsuario = "se ha presentado un problema tratando de registar el nuevo Perfil";
             perfilResponse.getMensajes().add(mensajeUsuario);
 
             excepcion.printStackTrace();

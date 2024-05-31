@@ -21,6 +21,11 @@ public final class DivisaDTO {
         setCodigoISO(codigoISO);
         setNombre(nombre);
     }
+    //Este fue el agregado
+    public static DivisaDTO fromString(String value) {
+        UUID id = UUID.fromString(value);
+        return new DivisaDTO(id, TextHelper.EMPTY, TextHelper.EMPTY);
+    }
 
     public static final DivisaDTO build(){
         return new DivisaDTO();

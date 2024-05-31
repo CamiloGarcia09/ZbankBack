@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/zbank")
-public class DivisaController {
+public final class DivisaController {
 
     @GetMapping("/divisas")
     public ResponseEntity<DivisaResponse> consultar(){

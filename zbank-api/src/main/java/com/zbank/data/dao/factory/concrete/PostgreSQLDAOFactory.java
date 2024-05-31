@@ -1,6 +1,5 @@
 package com.zbank.data.dao.factory.concrete;
 
-import com.zbank.crosscutting.exceptions.ZBANKException;
 import com.zbank.crosscutting.exceptions.custom.DataZBANKException;
 import com.zbank.crosscutting.exceptions.messageCatalog.MessageCatalogStrategy;
 import com.zbank.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
@@ -24,17 +23,17 @@ public final class PostgreSQLDAOFactory extends SqlConnection implements DAOFact
     }
 
     private void abrirConexion() {
-        final String connectionUrl = "jdbc:postgresql://localhost:5432/Zbanky?user=postgres&password=653200";  //URL de la base de datos, usuario y contraseña para acceder a ella
+        final String connectionUrl = "jdbc:postgresql://localhost:5432/ZBank?user=postgres&password=LAguma123";  //URL de la base de datos, usuario y contraseña para acceder a ella
         try {
             setConexion(DriverManager.getConnection(connectionUrl));
         } catch (final SQLException excepcion) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00002);
-            var mensajeTecnico = "Se ha presentado un problema tratando de obtener la conexión con la base de datos PostgreSQL. Por favor revise la traza de errores para identificar y solucionar el problema...";
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00024);
 
             throw new DataZBANKException(mensajeTecnico, mensajeUsuario, excepcion);
         } catch (final Exception excepcion) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00002);
-            var mensajeTecnico = "Se ha presentado un problema INESPERADO tratando de obtener la conexión con la base de datos PostgreSQL. Por favor revise la traza de errores para identificar y solucionar el problema...";
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00025);
 
             throw new DataZBANKException(mensajeTecnico, mensajeUsuario, excepcion);
         }
@@ -76,38 +75,4 @@ public final class PostgreSQLDAOFactory extends SqlConnection implements DAOFact
         return new DivisaPostgreSqlDAO(getConexion());
     }
 
-   /* public static void main(String[] args) {
-		try {
-			DAOFactory factory = DAOFactory.getFactory();
-
-			System.out.println("Iniciando transacción...");
-			factory.iniciarTransaccion();
-
-			System.out.println("Creando ciudad aleatoriamente");
-			DepartamentoEntity departamento = DepartamentoEntity.build()
-					.setId(UUIDHelper.convertToUUID("7827155D-0A6B-4D6E-9807-C5B7097D94F0"));
-			CiudadEntity ciudad = CiudadEntity.build().setId(UUIDHelper.generate())
-					.setNombre("Rionegro-" + UUIDHelper.generate()).setDepartamento(departamento);
-
-			factory.getCiudadDAO().crear(ciudad);
-
-			System.out.println("Consultamos ciudades: ");
-			var resultados = factory.getCiudadDAO().consultar(CiudadEntity.build());
-
-			for (CiudadEntity ciudadEntity : resultados) {
-				System.out.println("idCiudad: " + ciudadEntity.getId() + ", nombreCiudad: " + ciudadEntity.getNombre()
-						+ ", idDepartamento: " + ciudadEntity.getDepartamento().getId() + ", nombreDepartamento: "
-						+ ciudadEntity.getDepartamento().getNombre() + ", idPais: "
-						+ ciudadEntity.getDepartamento().getPais().getId() + ", nombrePais: "
-						+ ciudadEntity.getDepartamento().getPais().getNombre());
-			}
-
-			System.out.println("Confirmando transacción...");
-			factory.confirmarTransaccion();
-			System.out.println("Cerrando conexión...");
-			factory.cerrarConexion();
-		} catch (final Exception excepcion) {
-			excepcion.printStackTrace();
-		}
-	}*/
 }

@@ -12,6 +12,7 @@ public final class TipoDocumentoDTO {
     private String abreviacion;
 
     public TipoDocumentoDTO() {
+        super();
         setId(UUIDHelper.getDefault());
         setNombre(TextHelper.EMPTY);
         setAbreviacion(TextHelper.EMPTY);
@@ -23,8 +24,13 @@ public final class TipoDocumentoDTO {
         setAbreviacion(abreviacion);
     }
 
-    public static final TipoDocumentoDTO build(){
+   public static final TipoDocumentoDTO build(){
         return new TipoDocumentoDTO();
+    }
+//Este fue el agregado
+    public static TipoDocumentoDTO fromString(String value) {
+        UUID id = UUID.fromString(value);
+        return new TipoDocumentoDTO(id, TextHelper.EMPTY, TextHelper.EMPTY);
     }
 
     public final UUID getId() {
@@ -53,7 +59,6 @@ public final class TipoDocumentoDTO {
         this.abreviacion = TextHelper.applyTrim(abreviacion);
         return this;
     }
-
 }
 
 

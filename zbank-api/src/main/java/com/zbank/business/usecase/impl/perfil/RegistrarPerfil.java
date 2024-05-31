@@ -19,10 +19,9 @@ public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
     private DAOFactory factory;
 
     public RegistrarPerfil(final DAOFactory factory) {
-
-        if(getObjectHelper().isNull(factory)){
-            var mensajeUsuario = "Se ha presentado un porblema tratando de llevar a cabo el registro de una ciudad";
-            var mensajeTecnico = "El DAOFactory para crear la ciudad llego nulo...";
+        if (getObjectHelper().isNull(factory)) {
+            var mensajeUsuario = "Se ha presentado un problema tratando de llevar a cabo el registro de una ciudad";
+            var mensajeTecnico = "El DAOFactory para crear la ciudad llegó nulo...";
             throw new BusinessZBANKException(mensajeTecnico, mensajeUsuario);
         }
         this.factory = factory;
@@ -30,22 +29,10 @@ public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
 
     @Override
     public void execute(final PerfilDomain data) {
-
-        if (!validarLongitudAtributo(data.getNombre(), 2, 30)) {
-            throw new IllegalArgumentException("El nombre debe tener entre 2 y 30 caracteres.");
-        }
-        if (!validarLongitudAtributo(data.getApellido(), 2, 30)) {
-            throw new IllegalArgumentException("El apellido debe tener entre 2 y 30 caracteres.");
-        }
-        if (!validarLongitudAtributo(data.getNombreUsuario(), 3, 15)) {
-            throw new IllegalArgumentException("El nombre de usuario debe tener entre 3 y 15 caracteres.");
-        }
-        if (!validarLongitudAtributo(data.getClave(), 8, 20)) {
-            throw new IllegalArgumentException("La clave debe tener entre 8 y 20 caracteres.");
-        }
-        if (!validarLongitudAtributo(data.getCorreo(), 5, 50)) {
-            throw new IllegalArgumentException("El correo debe tener entre 5 y 50 caracteres.");
-        }
+        validarAtributos(data);
+        validarPerfilMismoNombreUsuario(data.getNombreUsuario());
+        validarPerfilMismoCorreo(data.getCorreo());
+        validarPerfilMismoNumeroDocumento(data.getNumeroDocumento());
 
         var perfilEntity = PerfilEntity.build()
                 .setId(generarIdentificadorPerfil())
@@ -61,34 +48,76 @@ public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
         factory.getPerfilDAO().crear(perfilEntity);
     }
 
-    private final UUID generarIdentificadorPerfil(){
+    private void validarAtributos(final PerfilDomain data) {
 
-        UUID id= UUIDHelper.generate();
-        boolean existeId=true;
+        if (!TextHelper.SoloLetras(data.getNombre())) {
+            throw new IllegalArgumentException("El nombre debe contener solo letras.");
+        }
+        if (!validarLongitudAtributo(data.getNombre(), 1, 20)) {
+            throw new IllegalArgumentException("El nombre debe tener entre 1 y 20 caracteres.");
+        }
+        if (!TextHelper.SoloLetras(data.getApellido())) {
+            throw new IllegalArgumentException("El apellido debe contener solo letras.");
+        }
+        if (!validarLongitudAtributo(data.getApellido(), 1, 20)) {
+            throw new IllegalArgumentException("El apellido debe tener entre 1 y 20 caracteres.");
+        }
+        if(!TextHelper.SoloLetrasDigitosEspacios(data.getNombreUsuario())){
+            throw new IllegalArgumentException("El nombre de usuario solo puede contener letras y numeros");
+        }
+        if (!validarLongitudAtributo(data.getNombreUsuario(), 1, 25)) {
+            throw new IllegalArgumentException("El nombre de usuario debe tener entre 1 y 25 caracteres.");
+        }
+        if (!validarLongitudAtributo(data.getClave(), 8, 30)) {
+            throw new IllegalArgumentException("La clave debe tener entre 8 y 30 caracteres.");
+        }
+        if (!TextHelper.contieneFormatoCorreo(data.getCorreo())) {
+            throw new IllegalArgumentException("El correo electrónico no tiene un formato válido.");
+        }
+        if (!validarLongitudAtributo(data.getCorreo(), 6, 100)) {
+            throw new IllegalArgumentException("El correo debe tener entre 6 y 100 caracteres.");
+        }
+    }
 
-        while (existeId){
-            id=UUIDHelper.generate();
-            var perfilEntity= PerfilEntity.build().setId(id);
-            var resultados=factory.getPerfilDAO().consultar(perfilEntity);
+    private final UUID generarIdentificadorPerfil() {
+        UUID id = UUIDHelper.generate();
+        boolean existeId = true;
 
-            existeId=!resultados.isEmpty();
+        while (existeId) {
+            id = UUIDHelper.generate();
+            var perfilEntity = PerfilEntity.build().setId(id);
+            var resultados = factory.getPerfilDAO().consultar(perfilEntity);
+            existeId = !resultados.isEmpty();
         }
         return id;
+    }
+
+    private void validarPerfilMismoNombreUsuario(String nombreUsuario) {
+        var perfilEntity = PerfilEntity.build().setNombreUsuario(nombreUsuario);
+        var resultados = factory.getPerfilDAO().consultar(perfilEntity);
+        if (!resultados.isEmpty()) {
+            throw new IllegalArgumentException("Ya existe un perfil con el mismo nombre de usuario.");
+        }
+    }
+
+    private void validarPerfilMismoCorreo(String correo) {
+        var perfilEntity = PerfilEntity.build().setCorreo(correo);
+        var resultados = factory.getPerfilDAO().consultar(perfilEntity);
+        if (!resultados.isEmpty()) {
+            throw new IllegalArgumentException("Ya existe un perfil con el mismo correo.");
+        }
+    }
+
+    private void validarPerfilMismoNumeroDocumento(int numeroDocumento) {
+        var perfilEntity = PerfilEntity.build().setNumeroDocumento(numeroDocumento);
+        var resultados = factory.getPerfilDAO().consultar(perfilEntity);
+        if (!resultados.isEmpty()) {
+            throw new IllegalArgumentException("Ya existe un perfil con el mismo número de documento.");
+        }
     }
 
     public boolean validarLongitudAtributo(String atributo, int longitudMinima, int longitudMaxima) {
         return TextHelper.longitudMinimaPermitida(atributo, longitudMinima) &&
                 TextHelper.longitudMaximaPermitida(atributo, longitudMaxima);
     }
-
-   /* private final void validarPerfilMismoNombreUsuario{
-
-    }
-    private final void validarPerfilMismoCorreo{
-
-    }
-
-    private final void validarPerfilMismoNumeroDocumento{
-
-    }*/
 }

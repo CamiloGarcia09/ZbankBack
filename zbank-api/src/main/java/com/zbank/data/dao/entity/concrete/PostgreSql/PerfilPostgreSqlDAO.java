@@ -150,7 +150,7 @@ public final class PerfilPostgreSqlDAO extends SqlConnection implements PerfilDA
             }
         } catch (final SQLException exception) {
             var mensajeUsuario = "Se ha presentado un problema tratando de consultar el perfil. Por favor, contacte al administrador del sistema.";
-            var mensajeTecnico = "Se ha presentado una SQLException tratando de realizar la consulta de los perfiles en la tabla \"Perfil\" de la base de datos PostgreSQL.";
+            var mensajeTecnico = TextHelper.reemplazarParametro("Se ha presentado una SQLException tratando de realizar la consulta de los perfiles en la tabla \"Perfil\" de la base de datos PostgreSQL.","1");
 
             throw new DataZBANKException(mensajeUsuario, mensajeTecnico, exception);
         } catch (final Exception exception) {
@@ -166,11 +166,9 @@ public final class PerfilPostgreSqlDAO extends SqlConnection implements PerfilDA
 
     @Override
     public void modificar(PerfilEntity data) {
-
     }
 
     @Override
     public void eliminar(PerfilEntity data) {
-
     }
 }

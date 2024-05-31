@@ -22,8 +22,8 @@ public final class ConsultarPerfilesFacade implements FacadeWithReturn<PerfilDTO
     public List<PerfilDTO> execute(final PerfilDTO dto) {
         try {
             var usecase = new ConsultarPerfiles(daoFactory);
-            var periflDomain = PerfilAssemblerDTO.getInstance().toDomain(dto);
-            var resultadosDomain = usecase.execute(periflDomain);
+            var perfilDomain = PerfilAssemblerDTO.getInstance().toDomain(dto);
+            var resultadosDomain = usecase.execute(perfilDomain);
             return PerfilAssemblerDTO.getInstance().toDTOCollection(resultadosDomain);
 
         } catch (final ZBANKException exception) {

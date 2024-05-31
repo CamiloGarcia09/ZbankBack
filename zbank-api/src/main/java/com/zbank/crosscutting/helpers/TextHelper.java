@@ -1,4 +1,9 @@
 package com.zbank.crosscutting.helpers;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Pattern;
+
 //Los helpers son ayudantes, hacen su funcion y desaparecen
 public final class TextHelper {
 //Estrategia de Singleton (Todos los metodos son esticos)
@@ -6,6 +11,9 @@ public final class TextHelper {
     public static final String UNDERLINE = "_";
     private static final String LISTA_SOLO_LETRAS="^[A-Za-záéíóúÁÉÍÓÚ]+$";
     private static final String LISTA_SOLO_LETRAS_DIGITOS_ESPACIOS="^[0-9A-Za-záéíóúÁÉÍÓÚ]+$";
+    private static final String PATTERN_CORREO_ELECTRONICO = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+    private static final String PATTERN_NUMERO_TELEFONO = "^[0-9]+$";
+    private static final List<Character> caracteresEspeciales = Arrays.asList('!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '[', ']', '{', '}', ';', ':', ',', '.', '<', '>', '?');
 
     //Constructor privado, nadie va a poder instanciar la clase, Patron SINGLETON
     private TextHelper() {
@@ -68,5 +76,19 @@ public final class TextHelper {
     }
     public static final boolean SoloLetrasDigitosEspacios(final String valor) {
         return getDefaultValue(valor).matches(LISTA_SOLO_LETRAS_DIGITOS_ESPACIOS);
+    }
+    public static final boolean contieneFormatoCorreo(final String valor) {
+        return getDefaultValue(valor).matches(PATTERN_CORREO_ELECTRONICO);
+    }
+    public static final boolean contieneSoloDigitos(final String valor) {
+        return getDefaultValue(valor).matches(PATTERN_NUMERO_TELEFONO);
+    }
+    public static boolean validarClave(String contraseña) {
+        boolean contieneMayuscula = !contraseña.equals(contraseña.toLowerCase());
+        boolean contieneMinuscula = !contraseña.equals(contraseña.toUpperCase());
+        boolean contieneNumero = contraseña.matches(".*\\d.*");
+        Pattern patronCaracterEspecial = Pattern.compile("[!@#$%^&*()\\[\\]{};:,.<>?]");
+        boolean contieneCaracterEspecial = patronCaracterEspecial.matcher(contraseña).find();
+        return contieneMayuscula && contieneMinuscula && contieneNumero && contieneCaracterEspecial;
     }
 }

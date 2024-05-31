@@ -49,8 +49,8 @@ public final class PerfilAssemblerEntity implements AssemblerEntity<PerfilDomain
     }
 
     @Override
-    public final List<PerfilDomain> toDomainCollection(final List<PerfilEntity> dtoCollection) {
-        var dtoCollectionTmp=getObjectHelper().getDefaultValue(dtoCollection,new ArrayList<PerfilEntity>());
+    public final List<PerfilDomain> toDomainCollection(final List<PerfilEntity> entityCollection) {
+        var dtoCollectionTmp=getObjectHelper().getDefaultValue(entityCollection,new ArrayList<PerfilEntity>());
         var resultadosDomain=new ArrayList<PerfilDomain>();
 
         for (PerfilEntity perfilEntity:dtoCollectionTmp){

@@ -15,7 +15,7 @@ public class ConsultarPerfiles implements UseCaseWithReturn<PerfilDomain, List<P
 
     public ConsultarPerfiles(final DAOFactory factory){
         if (ObjectHelper.getObjectHelper().isNull(factory)){
-            var mensajeUsuario="Se ha presentado un porblema tratando de llevar la consulta de los perfiles";
+            var mensajeUsuario="Se ha presentado un prOblema tratando de llevar la consulta de los perfiles";
             var mensajeTecnico="El DAOFactory de consultar las ciudades llego nulo...";
             throw new BusinessZBANKException(mensajeTecnico,mensajeUsuario);
         }

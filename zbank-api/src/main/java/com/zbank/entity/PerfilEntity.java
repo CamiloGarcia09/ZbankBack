@@ -12,7 +12,7 @@ public final class PerfilEntity {
     private UUID id;
     private String nombre;
     private String apellido;
-    private  TipoDocumentoEntity tipoDocumento;
+    private TipoDocumentoEntity tipoDocumento;
     private int numeroDocumento;
     private DivisaEntity divisa;
     private String nombreUsuario;

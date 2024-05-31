@@ -29,8 +29,8 @@ public final class TipoDocumentoAssemblerDTO implements AssemblerDTO<TipoDocumen
     @Override
     public final TipoDocumentoDTO toDTO(final TipoDocumentoDomain domain) {
         var tipoDocumentoDomainTmp= getObjectHelper().getDefaultValue(domain,TipoDocumentoDomain.build());
-        return TipoDocumentoDTO.build().setId(tipoDocumentoDomainTmp.getId()).setNombre(tipoDocumentoDomainTmp.getNombre())
-                .setAbreviacion(tipoDocumentoDomainTmp.getAbreviacion());
+        return TipoDocumentoDTO.build().setId(tipoDocumentoDomainTmp.getId()).setNombre(tipoDocumentoDomainTmp.getNombre()).setAbreviacion(tipoDocumentoDomainTmp.getAbreviacion());
+
     }
 
     @Override
@@ -47,7 +47,8 @@ public final class TipoDocumentoAssemblerDTO implements AssemblerDTO<TipoDocumen
 
     @Override
     public final List<TipoDocumentoDTO> toDTOCollection(final List<TipoDocumentoDomain> domainCollection) {
-        var domainCollectionTmp=getObjectHelper().getDefaultValue(domainCollection,new ArrayList<TipoDocumentoDomain>());
+        var domainCollectionTmp=getObjectHelper().getDefaultValue(domainCollection,
+                new ArrayList<TipoDocumentoDomain>());
         return domainCollectionTmp.stream().map(this::toDTO).toList();
     }
 }

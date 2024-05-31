@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/zbank")
-public class TipoDocumentoController {
+public final class TipoDocumentoController {
 
     @GetMapping("/tiposDocumentos")
     public ResponseEntity<TipoDocumentoResponse> consultar(){
