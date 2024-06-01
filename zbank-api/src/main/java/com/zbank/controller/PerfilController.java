@@ -56,7 +56,7 @@ public final class PerfilController {
             var facade = new RegistrarPerfilFacade();
             facade.execute(perfil);
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00061);
-            perfilResponse.getMensajes().add(mensajeUsuario);
+             perfilResponse.getMensajes().add(mensajeUsuario);
 
         } catch (final ZBANKException excepcion) {
             httpStatusCode = HttpStatus.BAD_REQUEST;

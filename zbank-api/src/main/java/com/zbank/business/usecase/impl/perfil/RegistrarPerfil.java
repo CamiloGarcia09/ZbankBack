@@ -170,7 +170,7 @@ public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
     }
 
     private void validarPerfilMismoNombreUsuario(String nombreUsuario) {
-        var perfilEntity = PerfilEntity.build().setNombreUsuario(nombreUsuario.toLowerCase());
+        var perfilEntity = PerfilEntity.build().setNombreUsuario(nombreUsuario);
         var resultados = factory.getPerfilDAO().consultar(perfilEntity);
         if (!resultados.isEmpty()) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00072);

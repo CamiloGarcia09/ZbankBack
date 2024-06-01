@@ -156,7 +156,7 @@ public class MessageCatalogExternalService implements MessageCatalog {
                 "La contraseña debe contener como minimo entre 8 y 30 caracteres..."));
 
         mensajes.put((CodigoMensaje.M00069.getIdentificador()), new Mensaje(CodigoMensaje.M00069,
-                "La contraseña debe contener como minimo un número , una letra mayúscula y un caracter especial..."));
+                "La contraseña debe contener como minimo un número , una letra mayúscula, una minuscula y un caracter especial..."));
 
         mensajes.put((CodigoMensaje.M00070.getIdentificador()), new Mensaje(CodigoMensaje.M00070,
                 "El correo electrónico no tiene un formato válido"));

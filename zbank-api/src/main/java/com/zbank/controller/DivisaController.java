@@ -8,12 +8,14 @@ import com.zbank.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
 import com.zbank.dto.DivisaDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/zbank")
+@CrossOrigin(origins="http://localhost:3000")
 public final class DivisaController {
 
     @GetMapping("/divisas")
