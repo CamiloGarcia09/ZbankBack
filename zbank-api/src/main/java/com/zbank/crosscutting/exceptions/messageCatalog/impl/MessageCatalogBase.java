@@ -9,12 +9,13 @@ import com.zbank.crosscutting.helpers.TextHelper;
 
 import java.util.HashMap;
 import java.util.Map;
-public class MessageCatalogBase implements MessageCatalog {
 
-    private final Map<String, Mensaje> mensajes= new HashMap<>();
+public final class MessageCatalogBase implements MessageCatalog {
+
+    private final Map<String, Mensaje> mensajes = new HashMap<>();
 
     @Override
-    public void inicializar() {
+    public final void inicializar() {
 
         mensajes.clear();
         mensajes.put(CodigoMensaje.M00001.getIdentificador(), new Mensaje(CodigoMensaje.M00001,
@@ -88,22 +89,25 @@ public class MessageCatalogBase implements MessageCatalog {
     }
 
     @Override
-    public String obtenerContendidoMensaje(final CodigoMensaje codigo,final String... parametros) {
+    public final String obtenerContendidoMensaje(final CodigoMensaje codigo, final String... parametros) {
         return obtenerMensaje(codigo, parametros).getContenido();
     }
 
     @Override
-    public Mensaje obtenerMensaje(final CodigoMensaje codigo, final String... parametros) {
+    public final Mensaje obtenerMensaje(final CodigoMensaje codigo, final String... parametros) {
+
         if (ObjectHelper.getObjectHelper().isNull(codigo)) {
             var mensajeUsuario=obtenerContendidoMensaje(CodigoMensaje.M00002);
             var mensajeTecnico=obtenerContendidoMensaje(CodigoMensaje.M00001);
             throw new CrosscuttingZBANKException(mensajeTecnico, mensajeUsuario);
         }
+
         if (!codigo.isBase()) {
             var mensajeUsuario=obtenerContendidoMensaje(CodigoMensaje.M00002);
             var mensajeTecnico= TextHelper.reemplazarParametro(obtenerContendidoMensaje(CodigoMensaje.M00004, codigo.getIdentificador()));
             throw new CrosscuttingZBANKException(mensajeTecnico, mensajeUsuario);
         }
+
         if (!mensajes.containsKey(codigo.getIdentificador())) {
             var mensajeUsuario=obtenerContendidoMensaje(CodigoMensaje.M00002);
             var mensajeTecnico=TextHelper.reemplazarParametro(obtenerContendidoMensaje(CodigoMensaje.M00003, codigo.getIdentificador()));

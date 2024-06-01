@@ -15,6 +15,6 @@ public final class BusinessZBANKException  extends ZBANKException {
         super(mensajeTecnico, mensajeUsuario, lugar);
     }
     public BusinessZBANKException(final String mensajeTecnico, final String mensajeUsuario, final Throwable excepcionRaiz) {
-        super(mensajeTecnico, mensajeUsuario, Lugar.BUSINESS, excepcionRaiz);
+        super(mensajeTecnico, mensajeUsuario, lugar, excepcionRaiz);
     }
 }

@@ -81,7 +81,12 @@ public enum CodigoMensaje {
     M00073(TipoMensaje.USUARIO, CategoriaMensaje.ADVERTENCIA, "00073", false),
     M00074(TipoMensaje.USUARIO, CategoriaMensaje.ADVERTENCIA, "00074", false),
     M00075(TipoMensaje.TECNICO, CategoriaMensaje.ERROR, "00075", false),
-    M00076(TipoMensaje.TECNICO, CategoriaMensaje.ERROR, "00076", false);
+
+    M00076(TipoMensaje.TECNICO, CategoriaMensaje.ERROR, "00076", false),
+    M00077(TipoMensaje.USUARIO, CategoriaMensaje.INFORMACION, "00077", false),
+    M00078(TipoMensaje.TECNICO, CategoriaMensaje.ERROR, "00078", false),
+    M00079(TipoMensaje.USUARIO, CategoriaMensaje.INFORMACION, "00079", false),
+    M00080(TipoMensaje.TECNICO, CategoriaMensaje.ERROR, "00080", false);
 
     private TipoMensaje tipo;
     private CategoriaMensaje categoria;
@@ -95,6 +100,10 @@ public enum CodigoMensaje {
         setCategoria(categoria);
         setCodigo(codigo);
         setBase(base);
+    }
+
+    public final boolean isBase() {
+        return base;
     }
 
     public final TipoMensaje getTipo() {
@@ -123,10 +132,6 @@ public enum CodigoMensaje {
 
     private final void setBase(final boolean base) {
         this.base = base;
-    }
-
-    public final boolean isBase() {
-        return base;
     }
 
     public String getIdentificador() {

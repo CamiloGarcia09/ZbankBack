@@ -12,7 +12,9 @@ import com.zbank.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
 import com.zbank.crosscutting.helpers.TextHelper;
 import com.zbank.crosscutting.helpers.UUIDHelper;
 import com.zbank.data.dao.factory.DAOFactory;
+import com.zbank.entity.DivisaEntity;
 import com.zbank.entity.PerfilEntity;
+import com.zbank.entity.TipoDocumentoEntity;
 
 import java.util.UUID;
 
@@ -31,6 +33,10 @@ public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
 
     @Override
     public void execute(final PerfilDomain data) {
+
+        validarTipoDocumentoExiste(data.getTipoDocumento().getId());
+        validarDivisaExiste(data.getDivisa().getId());
+
         validarNombre(data.getNombre());
         validarApellido(data.getApellido());
         validarNumeroDocumento(data.getNumeroDocumento());
@@ -203,4 +209,25 @@ public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
         return TextHelper.longitudMinimaPermitida(atributo, longitudMinima) &&
                 TextHelper.longitudMaximaPermitida(atributo, longitudMaxima);
     }
+
+    private void validarTipoDocumentoExiste(UUID tipoDocumentoId) {
+        var tipoDocumentoEntity = TipoDocumentoEntity.build().setId(tipoDocumentoId);
+        var resultados = factory.getTipoDocumentoDAO().consultar(tipoDocumentoEntity);
+        if (resultados.isEmpty()) {
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00077);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00078);
+            throw new BusinessZBANKException(mensajeTecnico, mensajeUsuario);
+        }
+    }
+
+    private void validarDivisaExiste(UUID divisaId) {
+        var divisaEntity = DivisaEntity.build().setId(divisaId);
+        var resultados = factory.getDivisaDAO().consultar(divisaEntity);
+        if (resultados.isEmpty()) {
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00079);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00080);
+            throw new BusinessZBANKException(mensajeTecnico, mensajeUsuario);
+        }
+    }
+
 }

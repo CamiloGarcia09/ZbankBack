@@ -17,13 +17,13 @@ public class ZBANKException extends RuntimeException{
         setLugar(lugar);
     }
 
-    public ZBANKException(final String mensajeUsuario, final Lugar lugar) {
-        super(mensajeUsuario);
+    public ZBANKException(final String mensajeTecnico, final String mensajeUsuario, final Lugar lugar ) {
+        super(mensajeTecnico);
         setMensajeUsuario(mensajeUsuario);
         setLugar(lugar);
     }
 
-    public ZBANKException(final String mensajeTecnico, final String mensajeUsuario, final Lugar lugar ) {
+    public ZBANKException(final String mensajeUsuario, final Lugar lugar) {
         super(mensajeUsuario);
         setMensajeUsuario(mensajeUsuario);
         setLugar(lugar);

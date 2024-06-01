@@ -12,14 +12,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MessageCatalogExternalService implements MessageCatalog {
-    private final Map<String, Mensaje> mensajes=new HashMap<>();
+
+    private final Map<String, Mensaje> mensajes = new HashMap<>();
 
     @Override
-    public void inicializar() {
+    public final void inicializar() {
 
         mensajes.clear();
-
-
         mensajes.put(CodigoMensaje.M00024.getIdentificador(), new Mensaje(CodigoMensaje.M00024,
                 "Se ha presentado un problema tratando de obtener la conexión con la base de datos PostgreSQL. Por favor revise la traza de errores para identificar y solucionar el problema..."));
 
@@ -42,16 +41,16 @@ public class MessageCatalogExternalService implements MessageCatalog {
                 "Se ha presentado un problema INESPERADO con una excepción de tipo Exception tratando de realizar la consulta de los tipos de documentos en la tabla \"TipoDocumento\" de la base de datos PostgreSQL."));
 
         mensajes.put((CodigoMensaje.M00031.getIdentificador()),new Mensaje(CodigoMensaje.M00031,
-                "Se ha presentado un problema tratando de crear el perfil \"%s\". Por favor intente de nuevo y si el problema persiste contacte con el administrador..."));
+                "Se ha presentado un problema tratando de crear el perfil . Por favor intente de nuevo y si el problema persiste contacte con el administrador..."));
 
-        mensajes.put((CodigoMensaje.M00032.getIdentificador()), new Mensaje(CodigoMensaje.M00032,"Se ha presentado una excepcion de tipo SQLException tratando de realizar el insert del perfil \"%s\" en la tabla \"Perfil\" de la base de datos " +
+        mensajes.put((CodigoMensaje.M00032.getIdentificador()), new Mensaje(CodigoMensaje.M00032,"Se ha presentado una excepcion de tipo SQLException tratando de realizar el insert del perfil  en la tabla \"Perfil\" de la base de datos " +
                 "PostgreSQL. Para más detalles, revise de forma completa la excepción raíz presentada.."));
 
         mensajes.put((CodigoMensaje.M00033.getIdentificador()), new Mensaje(CodigoMensaje.M00033,
                 "Se ha presentado un problema tratando de registrar el perfil \"%s\". Por favor intente de nuevo y si el problema persiste contacte con el administrador..."));
 
         mensajes.put((CodigoMensaje.M00034.getIdentificador()), new Mensaje(CodigoMensaje.M00034,
-                "Se ha presentado un problema INESPERADO de tipo Exception tratando de realizar el insert del perfil \"%s\" en la tabla \"Perfil\" de la base de datos PostgreSQL. Para más detalles, revise de forma completa la excepción raíz presentada.."));
+                "Se ha presentado un problema INESPERADO de tipo Exception tratando de realizar el insert del perfil  en la tabla \"Perfil\" de la base de datos PostgreSQL. Para más detalles, revise de forma completa la excepción raíz presentada.."));
 
         mensajes.put((CodigoMensaje.M00035.getIdentificador()),new Mensaje(CodigoMensaje.M00035,
                 "Se ha presentado un problema tratando de consultar el perfil. Por favor, contacte al administrador del sistema."));
@@ -177,31 +176,49 @@ public class MessageCatalogExternalService implements MessageCatalog {
                 "Los datos proporcionados, no cumplen con los requisitos (tipo de dato, obligaoriedad, longitud, formato y rango)..."));
 
         mensajes.put((CodigoMensaje.M00076.getIdentificador()), new Mensaje(CodigoMensaje.M00076,
-                "Alguno de los datos que se ingresaron y son únicos de cada perfil,ya se encuentran registrados en la base de datos."));
+                "Alguno de los datos que se ingresaron, son únicos de cada perfil,ya se encuentran registrados en la base de datos."));
+
+
+        mensajes.put((CodigoMensaje.M00077.getIdentificador()), new Mensaje(CodigoMensaje.M00077,
+                "El tipo de documento con el que tratas de registrarte no existe en el sistema "));
+
+        mensajes.put((CodigoMensaje.M00078.getIdentificador()), new Mensaje(CodigoMensaje.M00078,
+                "El tipo documento seleccionado no se encuentra almacenado en la base de datos, verifica con el administrador del sistema"));
+
+        mensajes.put((CodigoMensaje.M00079.getIdentificador()), new Mensaje(CodigoMensaje.M00079,
+                "La divisa con la que tratas de registrarte no existe en el sistema "));
+
+        mensajes.put((CodigoMensaje.M00080.getIdentificador()), new Mensaje(CodigoMensaje.M00080,
+                "La divisa seleccionada no se encuentra almacenada en la base de datos, verifica con el administrador del sistema"));
+
     }
 
     @Override
-    public String obtenerContendidoMensaje(CodigoMensaje codigo, String... parametros) {
+    public final String obtenerContendidoMensaje(final CodigoMensaje codigo, final String... parametros) {
         return obtenerMensaje(codigo,parametros).getContenido();
     }
 
     @Override
-    public Mensaje obtenerMensaje(CodigoMensaje codigo, String... parametros) {
+    public final Mensaje obtenerMensaje(final CodigoMensaje codigo, final String... parametros) {
+
         if(ObjectHelper.getObjectHelper().isNull(codigo)){
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00002);
             var mensajeTecnico =  MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00001);
             throw new CrosscuttingZBANKException(mensajeTecnico, mensajeUsuario);
         }
+
         if(codigo.isBase()) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00002);
             var mensajeTecnico = TextHelper.reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00005,codigo.getIdentificador()));
             throw new CrosscuttingZBANKException(mensajeTecnico, mensajeUsuario);
         }
+
         if(!mensajes.containsKey(codigo.getIdentificador())) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00002);
             var mensajeTecnico = TextHelper.reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00006,codigo.getIdentificador()));
             throw new CrosscuttingZBANKException(mensajeTecnico, mensajeUsuario);
         }
+
         return mensajes.get(codigo.getIdentificador());
     }
 }

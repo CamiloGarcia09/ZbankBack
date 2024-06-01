@@ -15,7 +15,8 @@ public final class DtoZBANKException extends ZBANKException {
     public DtoZBANKException(final String mensajeTecnico, final String mensajeUsuario) {
         super(mensajeTecnico, mensajeUsuario, lugar);
     }
+
     public DtoZBANKException(final String mensajeTecnico, final String mensajeUsuario, final Throwable excepcionRaiz) {
-            super(mensajeTecnico, mensajeUsuario, lugar, excepcionRaiz);
+        super(mensajeTecnico, mensajeUsuario, lugar, excepcionRaiz);
     }
 }

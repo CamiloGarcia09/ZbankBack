@@ -10,11 +10,12 @@ public class DefaultZBANKException extends ZBANKException {
     public DefaultZBANKException(final String mensajeUsuario , Lugar lugar) {
         super(mensajeUsuario, lugar);
     }
+
     public DefaultZBANKException(final String mensajeUsuario,final String mensajeTecnico) {
         super(mensajeTecnico, mensajeUsuario, lugar);
     }
-    public DefaultZBANKException(final String mensajeTecnico,final String mensajeUsuario,
-                               final Throwable exceptionRaiz) {
+
+    public DefaultZBANKException(final String mensajeTecnico,final String mensajeUsuario, final Throwable exceptionRaiz) {
         super(mensajeTecnico,mensajeUsuario, lugar, exceptionRaiz);
     }
 }

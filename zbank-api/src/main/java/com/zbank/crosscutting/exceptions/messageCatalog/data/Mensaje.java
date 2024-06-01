@@ -1,6 +1,7 @@
 package com.zbank.crosscutting.exceptions.messageCatalog.data;
 
-public class Mensaje {
+public final class Mensaje {
+
     private CodigoMensaje codigo;
     private String contenido;
 
