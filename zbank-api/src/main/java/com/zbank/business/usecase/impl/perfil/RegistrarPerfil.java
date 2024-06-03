@@ -101,10 +101,14 @@ public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
 
         String numeroDocumentoStr = String.valueOf(numeroDocumento);
         if (!TextHelper.contieneSoloDigitos(numeroDocumentoStr)) {
-            throw new BusinessZBANKException("El número de documento debe contener solo numeros.");
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00086);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00087);
+            throw new BusinessZBANKException(mensajeTecnico, mensajeUsuario);
         }
         if (!validarLongitudAtributo(numeroDocumentoStr, 1, 10)) {
-            throw new BusinessZBANKException("El número de documento debe tener entre 1 y 20 caracteres.");
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00088);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00089);
+            throw new BusinessZBANKException(mensajeTecnico, mensajeUsuario);
         }
     }
 
@@ -187,7 +191,7 @@ public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
     }
 
     private void validarPerfilMismoCorreo(String correo) {
-        var perfilEntity = PerfilEntity.build().setCorreo(correo.toLowerCase());
+        var perfilEntity = PerfilEntity.build().setCorreo(correo);
         var resultados = factory.getPerfilDAO().consultar(perfilEntity);
         if (!resultados.isEmpty()) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00073);
@@ -206,7 +210,7 @@ public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
         }
     }
 
-    public boolean validarLongitudAtributo(String atributo, int longitudMinima, int longitudMaxima) {
+    private boolean validarLongitudAtributo(String atributo, int longitudMinima, int longitudMaxima) {
         return TextHelper.longitudMinimaPermitida(atributo, longitudMinima) &&
                 TextHelper.longitudMaximaPermitida(atributo, longitudMaxima);
     }

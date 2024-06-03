@@ -208,6 +208,18 @@ public class MessageCatalogExternalService implements MessageCatalog {
 
         mensajes.put((CodigoMensaje.M00085.getIdentificador()), new Mensaje(CodigoMensaje.M00085,
                 "El tipo documento seleccionado y la divisa no se encuentra almacenado en la base de datos, verifica con el administrador del sistema"));
+
+        mensajes.put((CodigoMensaje.M00086.getIdentificador()), new Mensaje(CodigoMensaje.M00086,
+                "El número de documento debe contener solo numeros."));
+
+        mensajes.put((CodigoMensaje.M00087.getIdentificador()), new Mensaje(CodigoMensaje.M00087,
+                "El número de documento ingresado esta violando el tipo de dato long"));
+
+        mensajes.put((CodigoMensaje.M00088.getIdentificador()), new Mensaje(CodigoMensaje.M00088,
+                "El número de documento debe tener entre 1 y 10 caracteres."));
+
+        mensajes.put((CodigoMensaje.M00089.getIdentificador()), new Mensaje(CodigoMensaje.M00089,
+                "Los datos proporcionados, no cumplen con los requisitos de rango del atributo \""));
     }
 
     @Override
