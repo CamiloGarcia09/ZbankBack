@@ -13,9 +13,14 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ZBANK</name>
 	<description>Componente que ofrece los servicios para la gestion de las
-		finanzas personales de los usuarios a traves de servicios Rest</description>
+		finanzas personales de los usuarios a traves de servicios Rest
+	</description>
 	<properties>
 		<java.version>21</java.version>
+	</properties>
+	<properties>
+  		<sonar.organization>camilogarcia09</sonar.organization>
+  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 
