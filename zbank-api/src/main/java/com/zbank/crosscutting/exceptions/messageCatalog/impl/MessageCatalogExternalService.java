@@ -140,7 +140,7 @@ public class MessageCatalogExternalService implements MessageCatalog {
                 "No puede ser nulo"));
 
         mensajes.put((CodigoMensaje.M00064.getIdentificador()), new Mensaje(CodigoMensaje.M00064,
-                "Debe contener solo letras..."));
+                "El nombre debe contener solo letras..."));
 
         mensajes.put((CodigoMensaje.M00065.getIdentificador()), new Mensaje(CodigoMensaje.M00065,
                 "Debe tener entre 1 y 20 caracteres..."));
@@ -176,7 +176,7 @@ public class MessageCatalogExternalService implements MessageCatalog {
                 "Los datos proporcionados, no cumplen con los requisitos (tipo de dato, obligaoriedad, longitud, formato y rango)..."));
 
         mensajes.put((CodigoMensaje.M00076.getIdentificador()), new Mensaje(CodigoMensaje.M00076,
-                "Alguno de los datos que se ingresaron, son únicos de cada perfil,ya se encuentran registrados en la base de datos."));
+                "El nombre de usuario que se ingresó, es unico de cada perfil, por lo tanto ya se encuentra registrado en la base de datos."));
 
 
         mensajes.put((CodigoMensaje.M00077.getIdentificador()), new Mensaje(CodigoMensaje.M00077,
@@ -191,6 +191,23 @@ public class MessageCatalogExternalService implements MessageCatalog {
         mensajes.put((CodigoMensaje.M00080.getIdentificador()), new Mensaje(CodigoMensaje.M00080,
                 "La divisa seleccionada no se encuentra almacenada en la base de datos, verifica con el administrador del sistema"));
 
+
+
+        mensajes.put((CodigoMensaje.M00081.getIdentificador()), new Mensaje(CodigoMensaje.M00081,
+                "El correo que se ingresó, es unico de cada perfil, por lo tanto ya se encuentra registrado en la base de datos."));
+
+        mensajes.put((CodigoMensaje.M00082.getIdentificador()), new Mensaje(CodigoMensaje.M00082,
+                "El numero de documento que se ingresó, es unico de cada perfil, por lo tanto ya se encuentra registrado en la base de datos."));
+
+        mensajes.put((CodigoMensaje.M00083.getIdentificador()), new Mensaje(CodigoMensaje.M00083,
+                "El apellido debe contener solo letras..."));
+
+        mensajes.put((CodigoMensaje.M00084.getIdentificador()), new Mensaje(CodigoMensaje.M00084,
+                "La divisa y el tipo de documento que tratas de registrar no existen en el sistema"));
+
+
+        mensajes.put((CodigoMensaje.M00085.getIdentificador()), new Mensaje(CodigoMensaje.M00085,
+                "El tipo documento seleccionado y la divisa no se encuentra almacenado en la base de datos, verifica con el administrador del sistema"));
     }
 
     @Override

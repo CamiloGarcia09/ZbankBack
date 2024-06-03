@@ -34,8 +34,7 @@ public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
     @Override
     public void execute(final PerfilDomain data) {
 
-        validarTipoDocumentoExiste(data.getTipoDocumento().getId());
-        validarDivisaExiste(data.getDivisa().getId());
+        validarTipoDocumentoYDivisaExisten(data.getTipoDocumento().getId(),  data.getDivisa().getId());
 
         validarNombre(data.getNombre());
         validarApellido(data.getApellido());
@@ -46,6 +45,7 @@ public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
         validarPerfilMismoNombreUsuario(data.getNombreUsuario());
         validarPerfilMismoCorreo(data.getCorreo());
         validarPerfilMismoNumeroDocumento(data.getNumeroDocumento());
+
 
         var perfilEntity = PerfilEntity.build()
                 .setId(generarIdentificadorPerfil())
@@ -86,7 +86,7 @@ public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
             throw new BusinessZBANKException(mensajeTecnico, mensajeUsuario);
         }
         if (!TextHelper.SoloLetras(apellido)) {
-            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00064);
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00083);
             var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00075);
             throw new BusinessZBANKException(mensajeTecnico, mensajeUsuario);
         }
@@ -98,6 +98,7 @@ public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
     }
 
     private void validarNumeroDocumento(long numeroDocumento) {
+
         String numeroDocumentoStr = String.valueOf(numeroDocumento);
         if (!TextHelper.contieneSoloDigitos(numeroDocumentoStr)) {
             throw new BusinessZBANKException("El número de documento debe contener solo numeros.");
@@ -190,7 +191,7 @@ public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
         var resultados = factory.getPerfilDAO().consultar(perfilEntity);
         if (!resultados.isEmpty()) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00073);
-            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00076);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00081);
             throw new BusinessZBANKException(mensajeTecnico,mensajeUsuario);
         }
     }
@@ -200,7 +201,7 @@ public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
         var resultados = factory.getPerfilDAO().consultar(perfilEntity);
         if (!resultados.isEmpty()) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00074);
-            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00076);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00082);
             throw new BusinessZBANKException(mensajeTecnico,mensajeUsuario);
         }
     }
@@ -210,20 +211,24 @@ public class RegistrarPerfil implements UseCaseWithOutReturn<PerfilDomain> {
                 TextHelper.longitudMaximaPermitida(atributo, longitudMaxima);
     }
 
-    private void validarTipoDocumentoExiste(UUID tipoDocumentoId) {
+    private void validarTipoDocumentoYDivisaExisten(UUID tipoDocumentoId, UUID divisaId) {
         var tipoDocumentoEntity = TipoDocumentoEntity.build().setId(tipoDocumentoId);
-        var resultados = factory.getTipoDocumentoDAO().consultar(tipoDocumentoEntity);
-        if (resultados.isEmpty()) {
+        var divisaEntity = DivisaEntity.build().setId(divisaId);
+
+        var tipoDocumentoResultados = factory.getTipoDocumentoDAO().consultar(tipoDocumentoEntity);
+        var divisaResultados = factory.getDivisaDAO().consultar(divisaEntity);
+
+        if (tipoDocumentoResultados.isEmpty() && divisaResultados.isEmpty()) {
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00084);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00082);
+            throw new BusinessZBANKException(mensajeTecnico, mensajeUsuario);
+
+        } else if (tipoDocumentoResultados.isEmpty()) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00077);
             var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00078);
             throw new BusinessZBANKException(mensajeTecnico, mensajeUsuario);
-        }
-    }
 
-    private void validarDivisaExiste(UUID divisaId) {
-        var divisaEntity = DivisaEntity.build().setId(divisaId);
-        var resultados = factory.getDivisaDAO().consultar(divisaEntity);
-        if (resultados.isEmpty()) {
+        } else if (divisaResultados.isEmpty()) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00079);
             var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00080);
             throw new BusinessZBANKException(mensajeTecnico, mensajeUsuario);
