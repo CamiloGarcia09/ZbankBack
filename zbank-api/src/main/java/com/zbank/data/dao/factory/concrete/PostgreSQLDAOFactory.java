@@ -12,6 +12,8 @@ import com.zbank.data.dao.entity.concrete.PostgreSql.PerfilPostgreSqlDAO;
 import com.zbank.data.dao.entity.concrete.PostgreSql.TipoDocumentoPostgreSqlDAO;
 import com.zbank.data.dao.entity.concrete.SqlConnection;
 import com.zbank.data.dao.factory.DAOFactory;
+import org.springframework.beans.factory.annotation.Value;
+
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -23,7 +25,7 @@ public final class PostgreSQLDAOFactory extends SqlConnection implements DAOFact
     }
 
     private void abrirConexion() {
-        final String connectionUrl = "jdbc:postgresql://localhost:5432/Zbanky?user=postgres&password=653200";  //URL de la base de datos, usuario y contraseña para acceder a ella
+        final String connectionUrl = "jdbc:postgresql://localhost:5432/Zbanky?user=postgres&password=653200";
         try {
             setConexion(DriverManager.getConnection(connectionUrl));
         } catch (final SQLException excepcion) {
