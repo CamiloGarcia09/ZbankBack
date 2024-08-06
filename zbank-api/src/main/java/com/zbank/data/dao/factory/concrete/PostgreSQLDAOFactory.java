@@ -25,7 +25,7 @@ public final class PostgreSQLDAOFactory extends SqlConnection implements DAOFact
     }
 
     private void abrirConexion() {
-        final String connectionUrl = "jdbc:postgresql://localhost:5432/Zbanky?user=postgres&password=653200";
+        final String connectionUrl = "jdbc:postgresql://localhost:5432/Zbanky?user=postgres&password=1040";
         try {
             setConexion(DriverManager.getConnection(connectionUrl));
         } catch (final SQLException excepcion) {
