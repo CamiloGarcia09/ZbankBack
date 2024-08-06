@@ -12,4 +12,5 @@ public class ZbankApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ZbankApplication.class, args);
 	}
+
 }
