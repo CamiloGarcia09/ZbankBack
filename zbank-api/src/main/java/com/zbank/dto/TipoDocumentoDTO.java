@@ -24,9 +24,10 @@ public final class TipoDocumentoDTO {
         setAbreviacion(abreviacion);
     }
 
-   public static final TipoDocumentoDTO build(){
+    public static final TipoDocumentoDTO build(){
         return new TipoDocumentoDTO();
     }
+
 //Este fue el agregado
     public static TipoDocumentoDTO fromString(String value) {
         UUID id = UUID.fromString(value);
